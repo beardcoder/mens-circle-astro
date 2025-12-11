@@ -1,0 +1,17 @@
+node_modules
+dist
+.astro
+.git
+.gitignore
+.env*
+!.env.example
+*.log
+.vscode
+.idea
+*.md
+!README.md
+.prettierrc
+.eslintrc
+coverage
+.DS_Store
+Thumbs.db

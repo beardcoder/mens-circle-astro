@@ -1,15 +1,20 @@
 ---
 import { Image } from "astro:assets";
-import type { HeroContent } from "../types";
+import type { HeroContent } from "@app-types";
+import type { Event } from "@/types/pocketbase";
 
 type Props = {
   content: HeroContent;
+  event: Event | null;
 };
 
-const { content } = Astro.props;
+const { content, event } = Astro.props;
 ---
 
-<section class="hero" id="c2">
+<section
+  class="hero"
+  id="c2"
+>
   <div class="hero__content">
     <div class="hero__text">
       <span class="hero__label animate-in">{content.label}</span>
@@ -20,13 +25,19 @@ const { content } = Astro.props;
       <div class="hero__description animate-in">
         <p>{content.description}</p>
       </div>
-      <a class="hero__cta animate-in" href={content.cta.href}>
+      <a
+        class="hero__cta animate-in"
+        href={event && event.slug ? `/events/${event.slug}` : content.cta.href}
+      >
         {content.cta.label}
       </a>
     </div>
   </div>
   <div class="hero__image animate-in">
-    <div class="hero__image-wrapper" data-parallax="0.2">
+    <div
+      class="hero__image-wrapper"
+      data-parallax="0.2"
+    >
       <Image
         alt="Männer in authentischem Austausch beim Männerkreis in Straubing"
         class="hero__img"

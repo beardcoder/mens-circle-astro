@@ -1,5 +1,5 @@
 import type { FeatureCardContent } from "../../types";
-import featureImage from "../../assets/images/csm_Unbenannt_8796deb50d.webp";
+import featureImage from "../../assets/images/features-connection.webp";
 
 export const features: FeatureCardContent[] = [
   {
@@ -24,7 +24,7 @@ export const features: FeatureCardContent[] = [
     label: "Du bist nicht allein",
     title: "Vertrauen und Anerkennung",
     description:
-      "Wenn du dich öffnest und deine Gefühle teilst, wirst du schnell merken: Andere Männer kennen genau das, was du durchmachst. Dieses Gefühl von \"Ich bin der Einzige\" löst sich in Luft auf.",
+      'Wenn du dich öffnest und deine Gefühle teilst, wirst du schnell merken: Andere Männer kennen genau das, was du durchmachst. Dieses Gefühl von "Ich bin der Einzige" löst sich in Luft auf.',
     variant: "text",
   },
   {

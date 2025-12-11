@@ -1,5 +1,5 @@
 ---
-import type { FaqItem } from "../types";
+import type { FaqItem } from "@app-types";
 
 type Props = {
   items: FaqItem[];
@@ -8,16 +8,41 @@ type Props = {
 const { items } = Astro.props;
 ---
 
-<section class="faq" id="c12" itemscope itemtype="https://schema.org/FAQPage">
+<section
+  class="faq"
+  id="c12"
+  itemscope
+  itemtype="https://schema.org/FAQPage"
+>
   <h2 class="section__title reveal-text">Häufige Fragen</h2>
   <div class="faq__grid">
-    {items.map((item) => (
-      <article class="faq__item reveal-card" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 class="faq__question" itemprop="name">{item.question}</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <p class="faq__answer" itemprop="text" set:html={item.answer}></p>
-        </div>
-      </article>
-    ))}
+    {
+      items.map((item) => (
+        <article
+          class="faq__item reveal-card"
+          itemprop="mainEntity"
+          itemscope
+          itemtype="https://schema.org/Question"
+        >
+          <h3
+            class="faq__question"
+            itemprop="name"
+          >
+            {item.question}
+          </h3>
+          <div
+            itemprop="acceptedAnswer"
+            itemscope
+            itemtype="https://schema.org/Answer"
+          >
+            <p
+              class="faq__answer"
+              itemprop="text"
+              set:html={item.answer}
+            />
+          </div>
+        </article>
+      ))
+    }
   </div>
 </section>

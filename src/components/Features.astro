@@ -1,6 +1,6 @@
 ---
 import FeatureCard from "./FeatureCard.astro";
-import type { FeatureCardContent } from "../types";
+import type { FeatureCardContent } from "@app-types";
 
 type Props = {
   items: FeatureCardContent[];
@@ -9,7 +9,10 @@ type Props = {
 const { items } = Astro.props;
 ---
 
-<section class="features" id="c">
+<section
+  class="features"
+  id="c"
+>
   <header class="features__intro">
     <h2 class="section__title reveal-text">Was ist ein Männerkreis?</h2>
   </header>

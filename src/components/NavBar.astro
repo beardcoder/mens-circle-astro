@@ -1,0 +1,134 @@
+---
+import type { NavLink } from "../types";
+
+interface Props {
+  links: NavLink[];
+  cta: {
+    href: string;
+    label: string;
+  };
+  activePath?: string;
+}
+
+const { links, cta, activePath } = Astro.props;
+---
+
+<nav
+  aria-label="Hauptnavigation"
+  class="nav"
+  id="nav"
+>
+  <div class="nav__container">
+    <a
+      aria-label="Männerkreis Startseite"
+      class="nav__logo"
+      href="/"
+    >
+      <span class="nav__logo-text">MÄNNERKREIS</span>
+    </a>
+
+    <button
+      aria-controls="navMenu"
+      aria-expanded="false"
+      aria-label="Navigation öffnen"
+      class="nav__toggle"
+      type="button"
+      id="navToggle"
+    >
+      <span class="nav__toggle-line"></span>
+      <span class="nav__toggle-line"></span>
+      <span class="nav__toggle-line"></span>
+    </button>
+
+    <ul
+      class="nav__menu"
+      id="navMenu"
+    >
+      {
+        links.map((link) => (
+          <li>
+            <a
+              class:list={["nav__link", { "is-active": activePath === link.href }]}
+              href={link.href}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          class="nav__link nav__link--cta"
+          href={cta.href}
+        >
+          {cta.label}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById("nav");
+  const navToggle = document.getElementById("navToggle");
+  const navMenu = document.getElementById("navMenu");
+  const navLinks = document.querySelectorAll(".nav__link");
+
+  let isOpen = false;
+  let lastScrollY = 0;
+
+  function toggleMenu() {
+    isOpen = !isOpen;
+    updateMenuState();
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    updateMenuState();
+  }
+
+  function updateMenuState() {
+    if (isOpen) {
+      navToggle?.classList.add("is-active");
+      navMenu?.classList.add("is-active");
+      navToggle?.setAttribute("aria-expanded", "true");
+      document.body.classList.add("nav-open");
+    } else {
+      navToggle?.classList.remove("is-active");
+      navMenu?.classList.remove("is-active");
+      navToggle?.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open");
+    }
+  }
+
+  function handleScroll() {
+    const current = window.scrollY;
+    const isScrolled = current > 10;
+    const isHidden = current > lastScrollY && current > 120;
+
+    if (isScrolled) {
+      nav?.classList.add("nav--scrolled");
+    } else {
+      nav?.classList.remove("nav--scrolled");
+    }
+
+    if (isHidden) {
+      nav?.classList.add("nav--hidden");
+    } else {
+      nav?.classList.remove("nav--hidden");
+    }
+
+    lastScrollY = current;
+  }
+
+  navToggle?.addEventListener("click", toggleMenu);
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  // Initial check
+  handleScroll();
+</script>

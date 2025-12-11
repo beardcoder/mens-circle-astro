@@ -1,5 +1,5 @@
 import type { JourneySection } from "../../types";
-import journeyImage from "../../assets/images/csm_IMG_0064_059432bd0c.webp";
+import journeyImage from "../../assets/images/journey-group.webp";
 
 export const journey: JourneySection = {
   id: "c25",

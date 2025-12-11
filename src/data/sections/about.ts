@@ -1,5 +1,5 @@
 import type { AboutSection } from "../../types";
-import aboutImage from "../../assets/images/csm_Markus-1_6edac7501a.webp";
+import aboutImage from "../../assets/images/about-markus.webp";
 
 export const aboutSection: AboutSection = {
   id: "c11",

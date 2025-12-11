@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import EventRegistrationForm from '../../components/EventRegistrationForm';
-import { getEventBySlug, getPublishedEvents } from '../../lib/api/events';
-import { formatDate } from '../../utils/date';
+import BaseLayout from "@layouts/BaseLayout.astro";
+import EventRegistrationForm from "@components/EventRegistrationForm.svelte";
+import { getEventBySlug, getPublishedEvents } from "@lib/api/events";
+import { formatDate } from "@utils/date";
 
 export async function getStaticPaths() {
   try {
@@ -10,28 +10,36 @@ export async function getStaticPaths() {
     const events = await getPublishedEvents();
 
     if (events.length === 0) {
-      console.warn('No events found in PocketBase. Returning empty array.');
+      console.warn("No events found in PocketBase. Returning empty array.");
       return [];
     }
 
-    return events.map(event => ({
-      params: { slug: event.slug },
-    }));
+    return events
+      .filter((event) => {
+        if (!event.slug) {
+          console.warn(`Event ${event.id || "unknown"} is missing a slug. Skipping.`);
+          return false;
+        }
+        return true;
+      })
+      .map((event) => ({
+        params: { slug: event.slug },
+      }));
   } catch (error) {
-    console.error('Failed to fetch events for static paths:', error);
+    console.error("Failed to fetch events for static paths:", error);
     // Return empty array as fallback
     return [];
   }
 }
 
-const slug = Astro.params.slug || '';
+const slug = Astro.params.slug || "";
 const event = await getEventBySlug(slug);
 
 if (!event) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 
-const formattedDate = formatDate(event.date, 'de-DE');
+const formattedDate = formatDate(event.date, "de-DE");
 ---
 
 <BaseLayout
@@ -86,26 +94,28 @@ const formattedDate = formatDate(event.date, 'de-DE');
             </svg>
             <span>{event.time}</span>
           </div>
-          {event.maxParticipants && (
-            <div class="registration-hero__detail">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle
-                  cx="9"
-                  cy="7"
-                  r="4"
-                ></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-              <span>Max. {event.maxParticipants} Teilnehmer</span>
-            </div>
-          )}
+          {
+            event.maxParticipants && (
+              <div class="registration-hero__detail">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle
+                    cx="9"
+                    cy="7"
+                    r="4"
+                  />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span>Max. {event.maxParticipants} Teilnehmer</span>
+              </div>
+            )
+          }
           <div class="registration-hero__detail">
             <svg
               fill="none"
@@ -130,9 +140,7 @@ const formattedDate = formatDate(event.date, 'de-DE');
       </div>
 
       <div class="registration-hero__form-wrapper reveal-card">
-        <h2 class="registration-hero__form-title">
-          Sichere dir deinen Platz
-        </h2>
+        <h2 class="registration-hero__form-title">Sichere dir deinen Platz</h2>
         <EventRegistrationForm
           client:visible
           eventId={event.id!}

@@ -1,19 +1,18 @@
 import type { ImageMetadata } from "astro";
 
+// Navigation
 export type NavLink = {
   href: string;
   label: string;
 };
 
+// Content Types
 export type HeroContent = {
   label: string;
   title: string;
   highlight: string;
   description: string;
-  cta: {
-    href: string;
-    label: string;
-  };
+  cta: { href: string; label: string };
   image: ImageMetadata;
 };
 
@@ -24,17 +23,6 @@ export type FeatureCardContent = {
   description: string;
   variant: "large" | "text";
   image?: ImageMetadata;
-};
-
-export type EventContent = {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  location: string;
-  time: string;
-  ctaHref: string;
-  ctaLabel: string;
 };
 
 export type JourneyStep = {

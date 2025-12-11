@@ -10,10 +10,10 @@ Dieses Astro-Projekt folgt Best Practices für Wartbarkeit, Performance und Skal
 src/
 ├── assets/              # Statische Assets (Bilder, etc.)
 │   └── images/
-├── components/          # Astro & React Komponenten
+├── components/          # Astro & Svelte Komponenten
 │   ├── layout/         # Layout-Komponenten (Header, Footer)
 │   ├── *.astro         # Astro-Komponenten
-│   └── *.tsx           # React-Komponenten
+│   └── *.svelte        # Svelte-Komponenten (hydrated on client)
 ├── constants/          # App-weite Konstanten
 │   └── site.ts         # Site-Metadaten und URLs
 ├── data/               # Content-Daten
@@ -76,8 +76,8 @@ import { heroContent } from '../data';
 ### 3. **Performance-Optimierungen**
 
 #### Hydration Strategy
-- NavBar: `client:idle` (verzögerte Hydration)
-- NewsletterForm: `client:visible` (nur bei Sichtbarkeit)
+- NavBar (Svelte): `client:idle` (verzögerte Hydration)
+- NewsletterForm (Svelte): `client:visible` (nur bei Sichtbarkeit)
 - Reduziert initiales JavaScript-Bundle
 
 #### Image Optimization
@@ -87,20 +87,8 @@ import { heroContent } from '../data';
 - WebP Format automatisch
 
 #### Code Splitting
-```javascript
-// astro.config.mjs
-vite: {
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ["react", "react-dom"],
-        },
-      },
-    },
-  },
-}
-```
+- Astro + Vite übernehmen Code-Splitting automatisch
+- Nur die benötigten Svelte-Komponenten werden bei Hydration geladen
 
 ### 4. **Accessibility (A11y)**
 - Semantisches HTML

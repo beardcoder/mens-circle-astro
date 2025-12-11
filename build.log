@@ -1,0 +1,91 @@
+$ astro check && astro build
+15:49:12 [content] Syncing content
+15:49:12 [content] Synced content
+15:49:12 [types] Generated 35ms
+15:49:12 [check] Getting diagnostics for Astro files in /Users/markus.sommer/Projekte/Privat/mens-circle...
+[96meslint.config.js[0m:[93m6[0m:[93m25[0m - [93mwarning[0m[90m ts(6387): [0mThe signature '(...configs: InfiniteDepthConfigWithExtends[]): ConfigArray' of 'tseslint.config' is deprecated.
+
+[7m6[0m export default tseslint.config(
+[7m [0m [93m                        ~~~~~~[0m
+
+[96msrc/components/EventRegistrationForm.tsx[0m:[93m5[0m:[93m41[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase-schemas' instead of '@types/pocketbase-schemas'.
+
+[7m5[0m import { eventRegistrationSchema } from "@types/pocketbase-schemas";
+[7m [0m [91m                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/components/EventRegistrationForm.tsx[0m:[93m44[0m:[93m27[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m44[0m         email: z.string().email("Bitte gib eine gültige E-Mail-Adresse ein"),
+[7m  [0m [93m                          ~~~~~[0m
+[96msrc/components/EventRegistrationForm.tsx[0m:[93m5[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'eventRegistrationSchema' is declared but its value is never read.
+
+[7m5[0m import { eventRegistrationSchema } from "@types/pocketbase-schemas";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/NewsletterForm.tsx[0m:[93m5[0m:[93m44[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase-schemas' instead of '@types/pocketbase-schemas'.
+
+[7m5[0m import { newsletterSubscriberSchema } from "@types/pocketbase-schemas";
+[7m [0m [91m                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/components/NewsletterForm.tsx[0m:[93m23[0m:[93m28[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m23[0m   email: z.string().trim().email("Bitte gib eine gültige E-Mail-Adresse an."),
+[7m  [0m [93m                           ~~~~~[0m
+[96msrc/components/NewsletterForm.tsx[0m:[93m5[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'newsletterSubscriberSchema' is declared but its value is never read.
+
+[7m5[0m import { newsletterSubscriberSchema } from "@types/pocketbase-schemas";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/lib/events.ts[0m:[93m2[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'eventHeroImage' is declared but its value is never read.
+
+[7m2[0m import eventHeroImage from "../assets/images/csm_colton-duke-isk6rrk48yq-unsplash_3e2c5ff64e.webp";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/lib/events.ts[0m:[93m1[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'ImageMetadata' is declared but its value is never read.
+
+[7m1[0m import type { ImageMetadata } from "astro";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/lib/api/events.ts[0m:[93m4[0m:[93m45[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase-schemas' instead of '@types/pocketbase-schemas'.
+
+[7m4[0m import type { EventRegistrationInput } from "@types/pocketbase-schemas";
+[7m [0m [91m                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/lib/api/events.ts[0m:[93m3[0m:[93m47[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase' instead of '@types/pocketbase'.
+
+[7m3[0m import type { Event, EventRegistration } from "@types/pocketbase";
+[7m [0m [91m                                              ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/lib/api/events.ts[0m:[93m2[0m:[93m29[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase' instead of '@types/pocketbase'.
+
+[7m2[0m import { Collections } from "@types/pocketbase";
+[7m [0m [91m                            ~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/lib/api/newsletter.ts[0m:[93m4[0m:[93m48[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase-schemas' instead of '@types/pocketbase-schemas'.
+
+[7m4[0m import type { NewsletterSubscriberInput } from "@types/pocketbase-schemas";
+[7m [0m [91m                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/lib/api/newsletter.ts[0m:[93m3[0m:[93m43[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase' instead of '@types/pocketbase'.
+
+[7m3[0m import type { NewsletterSubscriber } from "@types/pocketbase";
+[7m [0m [91m                                          ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/lib/api/newsletter.ts[0m:[93m2[0m:[93m29[0m - [91merror[0m[90m ts(6137): [0mCannot import type declaration files. Consider importing 'pocketbase' instead of '@types/pocketbase'.
+
+[7m2[0m import { Collections } from "@types/pocketbase";
+[7m [0m [91m                            ~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/types/pocketbase-schemas.ts[0m:[93m27[0m:[93m21[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m27[0m   email: z.string().email("Bitte gib eine gültige E-Mail-Adresse ein"),
+[7m  [0m [93m                    ~~~~~[0m
+[96msrc/types/pocketbase-schemas.ts[0m:[93m8[0m:[93m21[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m8[0m   email: z.string().email("Bitte gib eine gültige E-Mail-Adresse ein"),
+[7m [0m [93m                    ~~~~~[0m
+
+[96msrc/types/schemas.ts[0m:[93m4[0m:[93m20[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; normalize?: boolean | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m4[0m   href: z.string().url().or(z.string().regex(/^\/|^#/)),
+[7m [0m [93m                   ~~~[0m
+
+Result (44 files): 
+- 8 errors
+- 0 warnings
+- 10 hints
+
+error: script "build" exited with code 1

@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import Features from '../components/Features.astro';
-import Quote from '../components/Quote.astro';
-import Events from '../components/Events.astro';
-import About from '../components/About.astro';
-import Journey from '../components/Journey.astro';
-import Faq from '../components/Faq.astro';
-import NewsletterSection from '../components/NewsletterSection.astro';
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Features from "@components/Features.astro";
+import Quote from "@components/Quote.astro";
+import Events from "@components/Events.astro";
+import About from "@components/About.astro";
+import Journey from "@components/Journey.astro";
+import Faq from "@components/Faq.astro";
+import NewsletterSection from "@components/NewsletterSection.astro";
 import {
   aboutSection,
   faqItems,
@@ -16,63 +16,26 @@ import {
   journey,
   newsletterCopy,
   quoteContent,
-} from '../data';
-import { getUpcomingEvents } from '../lib/api/events';
+} from "@data";
+import { getUpcomingEvents } from "@lib/api/events";
 
-// Fetch upcoming events from PocketBase
-let eventsForDisplay: Array<{
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  location: string;
-  time: string;
-  ctaHref: string;
-  ctaLabel: string;
-}> = [];
-
-try {
-  const upcomingEvents = await getUpcomingEvents();
-
-  // Convert PocketBase events to the format expected by EventCard component
-  eventsForDisplay = upcomingEvents.map(event => ({
-    slug: event.slug,
-    title: event.title,
-    description: event.description,
-    date: event.date,
-    location: event.location,
-    time: event.time,
-    ctaHref: `/events/${event.slug}`,
-    ctaLabel: "Jetzt anmelden",
-  }));
-} catch (error) {
-  console.warn('Failed to fetch events from PocketBase, using fallback data:', error);
-  // Fallback to static event data if PocketBase is not available
-  const { nextEvent } = await import('../data');
-  eventsForDisplay = [{
-    slug: nextEvent.slug,
-    title: nextEvent.title,
-    description: nextEvent.description,
-    date: nextEvent.date,
-    location: nextEvent.location,
-    time: nextEvent.time,
-    ctaHref: nextEvent.ctaHref,
-    ctaLabel: nextEvent.ctaLabel,
-  }];
-}
+const upcomingEvents = await getUpcomingEvents();
 ---
 
 <BaseLayout
   description="Männerkreis in Straubing für persönliche Entwicklung. Authentischer Austausch in geschütztem Raum. Männergruppe Niederbayern mit monatlichen Treffen."
   title="Männerkreis Straubing Niederbayern - Persönliche Entwicklung für Männer"
 >
-  <Hero content={heroContent} />
+  <Hero
+    content={heroContent}
+    event={upcomingEvents[0] || null}
+  />
   <Features items={features} />
   <Quote
     author={quoteContent.author}
     text={quoteContent.text}
   />
-  <Events events={eventsForDisplay} />
+  <Events events={upcomingEvents || null} />
   <About
     id={aboutSection.id}
     image={aboutSection.image}

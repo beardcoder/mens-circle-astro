@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import type { JourneyStep } from "../types";
+import type { JourneyStep } from "@app-types";
 import type { ImageMetadata } from "astro";
 
 type Props = {
@@ -14,7 +14,10 @@ type Props = {
 const { id, title, description, steps, image } = Astro.props;
 ---
 
-<section class="journey" id={id}>
+<section
+  class="journey"
+  id={id}
+>
   <div class="journey__content">
     <div class="journey__text reveal-text">
       <span class="journey__label">DEINE REISE</span>
@@ -22,20 +25,33 @@ const { id, title, description, steps, image } = Astro.props;
       <p class="journey__description">{description}</p>
 
       <ol class="journey__list">
-        {steps.map((step) => (
-          <li class="journey__item">
-            <span class="journey__icon">{step.number}</span>
-            <div>
-              <h4>{step.title}</h4>
-              <p>{step.description}</p>
-            </div>
-          </li>
-        ))}
+        {
+          steps.map((step) => (
+            <li class="journey__item">
+              <span class="journey__icon">{step.number}</span>
+              <div>
+                <h4>{step.title}</h4>
+                <p>{step.description}</p>
+              </div>
+            </li>
+          ))
+        }
       </ol>
     </div>
     <div class="journey__image reveal-card">
-      <Image alt="Persönliche Entwicklungsreise im Männerkreis" class="journey__img" loading="lazy" decoding="async" src={image} sizes="(min-width: 1200px) 40vw, 90vw" />
-      <div aria-hidden="true" class="journey__image-accent"></div>
+      <Image
+        alt="Persönliche Entwicklungsreise im Männerkreis"
+        class="journey__img"
+        loading="lazy"
+        decoding="async"
+        src={image}
+        sizes="(min-width: 1200px) 40vw, 90vw"
+      />
+      <div
+        aria-hidden="true"
+        class="journey__image-accent"
+      >
+      </div>
     </div>
   </div>
 </section>

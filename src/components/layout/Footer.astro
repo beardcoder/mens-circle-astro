@@ -1,5 +1,5 @@
 ---
-import type { NavLink } from "../../types";
+import type { NavLink } from "@app-types";
 
 type Props = {
   links?: NavLink[];
@@ -23,19 +23,30 @@ const footerLinks =
       <div class="footer__brand">
         <p class="footer__logo">MÄNNERKREIS</p>
         <p class="footer__tagline">
-          Ein Raum für echte Begegnungen, persönliches Wachstum und tiefe Verbindungen unter Männern.
+          Ein Raum für echte Begegnungen, persönliches Wachstum und tiefe Verbindungen unter
+          Männern.
         </p>
       </div>
 
-      <nav aria-label="Footer Navigation" class="footer__nav">
+      <nav
+        aria-label="Footer Navigation"
+        class="footer__nav"
+      >
         <div class="footer__nav-group">
           <p class="footer__nav-title">Navigation</p>
           <ul class="footer__nav-list">
-            {footerLinks.map((link) => (
-              <li>
-                <a href={link.href} title={link.label}>{link.label}</a>
-              </li>
-            ))}
+            {
+              footerLinks.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    title={link.label}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
       </nav>

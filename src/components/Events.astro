@@ -1,15 +1,18 @@
 ---
+import type { Event } from "@app-types/pocketbase";
 import EventCard from "./EventCard.astro";
-import type { EventContent } from "../types";
 
 type Props = {
-  events: EventContent[];
+  events: Event[] | null;
 };
 
 const { events } = Astro.props;
 ---
 
-<section class="events" id="events">
+<section
+  class="events"
+  id="events"
+>
   <header class="events__header">
     <div class="events__header-text reveal-text">
       <span class="events__label">NÄCHSTER TERMIN</span>
@@ -18,8 +21,12 @@ const { events } = Astro.props;
   </header>
 
   <div class="events__container">
-    {events.map((event) => (
-      <EventCard event={event} />
-    ))}
+    {
+      events && events.length > 0 ? (
+        events.map((event) => <EventCard event={event} />)
+      ) : (
+        <p class="events__empty">Aktuell sind keine Termine geplant.</p>
+      )
+    }
   </div>
 </section>

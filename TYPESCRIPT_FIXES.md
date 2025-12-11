@@ -22,34 +22,25 @@ return records as Event[];
 return records as unknown as Event[];
 ```
 
-### 2. EventRegistrationForm React Hook Form Typing
+### 2. Formular-Validierung mit Svelte + Zod
 
-**Problem:** Zod-Schema mit `.default("pending")` erzeugte optionalen Type, aber `useForm` erwartete required.
-
-**Lösung:**
-1. Separates Form-Data Type ohne `status` Feld
-2. `status` wird beim Submit hinzugefügt
-3. Schema in Component inline für bessere Type-Inference
+**Änderung:** React Hook Form wurde entfernt. Die Formulare nutzen jetzt Svelte-State mit `safeParse` aus Zod, um Fehlermeldungen pro Feld abzubilden und den Submit zu blockieren, wenn das Schema nicht erfüllt ist.
 
 **Betroffene Dateien:**
-- `src/components/EventRegistrationForm.tsx`
+- `src/components/EventRegistrationForm.svelte`
+- `src/components/NewsletterForm.svelte`
 - `src/types/pocketbase-schemas.ts`
 
 ```typescript
-// Form-spezifischer Type (ohne status)
-type EventRegistrationFormData = {
-  eventId: string;
-  name: string;
-  email: string;
-  phone?: string;
-  message?: string;
-};
-
-// Status wird beim Submit hinzugefügt
-await registerForEvent({
-  ...values,
-  status: "pending",
-});
+const result = formSchema.safeParse(formValues);
+if (!result.success) {
+  const fieldErrors: Record<string, string> = {};
+  for (const issue of result.error.issues) {
+    fieldErrors[issue.path[0] as string] = issue.message;
+  }
+  errors = fieldErrors;
+  return;
+}
 ```
 
 ### 3. Build-Zeit Fallbacks
