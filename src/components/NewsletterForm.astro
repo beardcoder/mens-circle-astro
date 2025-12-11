@@ -1,0 +1,209 @@
+---
+export interface Props {
+  privacyHref: string;
+  className?: string;
+}
+
+const { privacyHref, className } = Astro.props;
+---
+
+<div class="newsletter-form-wrapper">
+  <form
+    class:list={[className ?? "newsletter__form"]}
+    id="newsletter-form"
+  >
+    <div class="newsletter__fields">
+      <div class="newsletter__row">
+        <div class="newsletter__field">
+          <label
+            class="sr-only"
+            for="firstName"
+            >Vorname</label
+          >
+          <input
+            autocomplete="given-name"
+            class="newsletter__input"
+            id="firstName"
+            name="firstName"
+            placeholder="Vorname"
+            type="text"
+            required
+            minlength="2"
+          />
+        </div>
+        <div class="newsletter__field">
+          <label
+            class="sr-only"
+            for="lastName"
+            >Nachname</label
+          >
+          <input
+            autocomplete="family-name"
+            class="newsletter__input"
+            id="lastName"
+            name="lastName"
+            placeholder="Nachname"
+            type="text"
+            required
+            minlength="2"
+          />
+        </div>
+      </div>
+      <div class="newsletter__row">
+        <div class="newsletter__field newsletter__field--email">
+          <label
+            class="sr-only"
+            for="email"
+            >E-Mail</label
+          >
+          <input
+            autocomplete="email"
+            class="newsletter__input newsletter__input--email"
+            id="email"
+            name="email"
+            inputmode="email"
+            placeholder="deine@email.de"
+            type="email"
+            required
+          />
+        </div>
+        <button
+          aria-label="Newsletter abonnieren"
+          class="newsletter__submit"
+          type="submit"
+        >
+          <svg
+            aria-hidden="true"
+            class="newsletter__icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M5 12h14M12 5l7 7-7 7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="newsletter__message"
+      id="newsletter-message"
+      role="alert"
+    >
+    </div>
+
+    <p class="newsletter__privacy">
+      Mit der Anmeldung akzeptierst du unsere <a href={privacyHref}>Datenschutzbestimmungen</a>
+    </p>
+  </form>
+
+  <div
+    class="newsletter__success"
+    id="newsletter-success"
+    style="display:none"
+  >
+    <div
+      class="newsletter__success-icon"
+      aria-hidden="true"
+    >
+      <svg
+        fill="none"
+        height="96"
+        viewBox="0 0 72 72"
+        width="96"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="36"
+          cy="36"
+          fill="#c17b5d"
+          r="36"
+          opacity="0.16"
+        ></circle>
+        <path
+          d="m22 36.5 8.5 8.5L50 25"
+          stroke="#c17b5d"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="5"
+        ></path>
+      </svg>
+    </div>
+    <h3 class="newsletter__success-title">Danke für dein Vertrauen!</h3>
+    <p class="newsletter__success-message">
+      Du erhältst ab jetzt Inspirationen, Termine und Neuigkeiten direkt in dein Postfach.
+    </p>
+    <button
+      class="newsletter__success-back"
+      type="button"
+      id="newsletter-reset"
+    >
+      Zurück zum Formular
+      <svg
+        fill="none"
+        height="18"
+        viewBox="0 0 24 24"
+        width="18"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 19 5 12l7-7M5 12h14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        ></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  import PocketBase from "pocketbase";
+
+  const form = document.getElementById("newsletter-form") as HTMLFormElement;
+  const message = document.getElementById("newsletter-message");
+  const success = document.getElementById("newsletter-success");
+  const resetBtn = document.getElementById("newsletter-reset");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (message) message.textContent = "";
+
+    const formData = new FormData(form);
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const fullName = `${firstName} ${lastName}`.trim();
+
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const pb = new PocketBase(import.meta.env.PUBLIC_POCKETBASE_URL);
+      await pb.collection("newsletter_subscribers").create({ email, name: fullName });
+
+      form.style.display = "none";
+      if (success) success.style.display = "block";
+    } catch (error: any) {
+      if (message) {
+        message.textContent = error?.message || "Anmeldung fehlgeschlagen";
+        message.style.color = "var(--color-error, red)";
+      }
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+
+  resetBtn?.addEventListener("click", () => {
+    form.reset();
+    form.style.display = "block";
+    if (success) success.style.display = "none";
+    if (message) message.textContent = "";
+  });
+</script>

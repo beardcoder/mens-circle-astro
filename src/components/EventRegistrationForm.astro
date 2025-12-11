@@ -1,0 +1,205 @@
+---
+export interface Props {
+  eventId: string;
+  eventTitle: string;
+  privacyHref?: string;
+  className?: string;
+}
+
+const { eventId, eventTitle, privacyHref = "/datenschutz", className } = Astro.props;
+---
+
+<div class="event-registration-wrapper">
+  <form
+    class:list={[className ?? "event-registration__form"]}
+    id="event-registration-form"
+  >
+    <input
+      type="hidden"
+      name="eventId"
+      value={eventId}
+    />
+
+    <div class="event-registration__fields">
+      <div class="event-registration__field">
+        <label for="name">
+          Name <span aria-label="Pflichtfeld">*</span>
+        </label>
+        <input
+          autocomplete="name"
+          class="event-registration__input"
+          id="name"
+          name="name"
+          placeholder="Dein vollständiger Name"
+          type="text"
+          required
+          minlength="2"
+        />
+      </div>
+
+      <div class="event-registration__field">
+        <label for="email">
+          E-Mail <span aria-label="Pflichtfeld">*</span>
+        </label>
+        <input
+          autocomplete="email"
+          class="event-registration__input"
+          id="email"
+          name="email"
+          inputmode="email"
+          placeholder="deine@email.de"
+          type="email"
+          required
+        />
+      </div>
+
+      <div class="event-registration__field">
+        <label for="phone">
+          Telefon <span class="event-registration__optional">(optional)</span>
+        </label>
+        <input
+          autocomplete="tel"
+          class="event-registration__input"
+          id="phone"
+          name="phone"
+          inputmode="tel"
+          placeholder="+49 123 456789"
+          type="tel"
+        />
+      </div>
+
+      <div class="event-registration__field">
+        <label for="message">
+          Nachricht <span class="event-registration__optional">(optional)</span>
+        </label>
+        <textarea
+          class="event-registration__textarea"
+          id="message"
+          name="message"
+          placeholder="Hast du Fragen oder Anmerkungen?"
+          rows="4"
+          maxlength="500"
+        ></textarea>
+      </div>
+    </div>
+
+    <div
+      class="event-registration__message"
+      id="event-message"
+      role="alert"
+    >
+    </div>
+
+    <p class="event-registration__privacy">
+      Mit der Anmeldung akzeptierst du unsere <a href={privacyHref}>Datenschutzbestimmungen</a>
+    </p>
+
+    <button
+      class="event-registration__submit"
+      type="submit"
+    >
+      Jetzt anmelden
+    </button>
+  </form>
+
+  <div
+    class="event-registration__success"
+    id="event-success"
+    style="display:none"
+  >
+    <div
+      class="event-registration__success-icon"
+      aria-hidden="true"
+    >
+      <svg
+        fill="none"
+        height="96"
+        viewBox="0 0 72 72"
+        width="96"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="36"
+          cy="36"
+          fill="#c17b5d"
+          r="36"
+          opacity="0.16"
+        ></circle>
+        <path
+          d="m22 36.5 8.5 8.5L50 25"
+          stroke="#c17b5d"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="5"
+        ></path>
+      </svg>
+    </div>
+    <h3 class="event-registration__success-title">Anmeldung erfolgreich!</h3>
+    <p class="event-registration__success-message">
+      Deine Anmeldung für <strong>{eventTitle}</strong> wurde erfolgreich übermittelt. Du erhältst in
+      Kürze eine Bestätigung per E-Mail.
+    </p>
+    <button
+      class="event-registration__success-back"
+      type="button"
+      id="event-reset"
+    >
+      Weitere Anmeldung
+    </button>
+  </div>
+</div>
+
+<script>
+  import PocketBase from "pocketbase";
+
+  const form = document.getElementById("event-registration-form") as HTMLFormElement;
+  const message = document.getElementById("event-message");
+  const success = document.getElementById("event-success");
+  const resetBtn = document.getElementById("event-reset");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (message) message.textContent = "";
+
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalText = submitBtn?.textContent || "";
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Wird gesendet...";
+    }
+
+    try {
+      const pb = new PocketBase(import.meta.env.PUBLIC_POCKETBASE_URL);
+      await pb.collection("event_registrations").create({
+        eventId: formData.get("eventId"),
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone") || undefined,
+        message: formData.get("message") || undefined,
+        status: "pending",
+      });
+
+      form.style.display = "none";
+      if (success) success.style.display = "block";
+    } catch (error: any) {
+      if (message) {
+        message.textContent = error?.message || "Anmeldung fehlgeschlagen";
+        message.style.color = "var(--color-error, red)";
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    }
+  });
+
+  resetBtn?.addEventListener("click", () => {
+    form.reset();
+    form.style.display = "block";
+    if (success) success.style.display = "none";
+    if (message) message.textContent = "";
+  });
+</script>

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import EventRegistrationForm from "@components/EventRegistrationForm.svelte";
+import EventRegistrationForm from "@components/EventRegistrationForm.astro";
 import { getEventBySlug, getPublishedEvents } from "@lib/api/events";
 import { formatDate } from "@utils/date";
 
@@ -142,7 +142,6 @@ const formattedDate = formatDate(event.date, "de-DE");
       <div class="registration-hero__form-wrapper reveal-card">
         <h2 class="registration-hero__form-title">Sichere dir deinen Platz</h2>
         <EventRegistrationForm
-          client:visible
           eventId={event.id!}
           eventTitle={event.title}
           className="registration-hero__form"

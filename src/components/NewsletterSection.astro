@@ -1,5 +1,5 @@
 ---
-import NewsletterForm from "./NewsletterForm.svelte";
+import NewsletterForm from "./NewsletterForm.astro";
 
 type Props = {
   label: string;
@@ -11,7 +11,10 @@ type Props = {
 const { label, title, description, privacyHref } = Astro.props;
 ---
 
-<section class="newsletter" id="contact">
+<section
+  class="newsletter"
+  id="contact"
+>
   <div class="newsletter__content">
     <div class="newsletter__text reveal-text is-visible">
       <span class="newsletter__label">{label}</span>
@@ -20,7 +23,6 @@ const { label, title, description, privacyHref } = Astro.props;
     </div>
 
     <NewsletterForm
-      client:visible
       className="newsletter__form reveal-card is-visible"
       privacyHref={privacyHref}
     />

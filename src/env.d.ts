@@ -1,4 +1,5 @@
 /// <reference types="astro/client" />
+/// <reference types="@types/alpinejs" />
 
 interface ImportMetaEnv {
   readonly PUBLIC_POCKETBASE_URL: string;
@@ -6,4 +7,9 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;
+}
+
+// Alpine.js global
+interface Window {
+  Alpine: any;
 }

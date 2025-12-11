@@ -1,11 +1,11 @@
 // @ts-check
 import { defineConfig, envField } from "astro/config";
-import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://mens-circle.de",
-  integrations: [svelte()],
+  output: "static",
+  integrations: [],
   image: {
     domains: ["mens-circle.de"],
   },
@@ -24,7 +24,7 @@ export default defineConfig({
   },
   vite: {
     build: {
-      cssMinify: "lightningcss",
+      cssMinify: true,
     },
   },
 });
