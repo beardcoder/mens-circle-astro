@@ -2,151 +2,142 @@
 export interface Props {
   eventId: string;
   eventTitle: string;
-  privacyHref?: string;
   className?: string;
 }
 
-const { eventId, eventTitle, privacyHref = "/datenschutz", className } = Astro.props;
+const { eventId, eventTitle, className } = Astro.props;
 ---
 
-<div class="event-registration-wrapper">
-  <form
-    class:list={[className ?? "event-registration__form"]}
-    id="event-registration-form"
-  >
+<form
+  class:list={[className ?? "event-registration__form"]}
+  id="registration-hero__form"
+>
+  <input
+    type="hidden"
+    name="eventId"
+    value={eventId}
+  />
+
+  <div class="registration-form__group">
+    <label
+      class="registration-form__label"
+      for="firstname"
+    >
+      Vorname
+    </label>
     <input
-      type="hidden"
-      name="eventId"
-      value={eventId}
+      autocomplete="given-name"
+      class="registration-form__input"
+      id="firstname"
+      name="firstname"
+      placeholder="Vorname"
+      type="text"
+      required
+      minlength="2"
     />
+  </div>
 
-    <div class="event-registration__fields">
-      <div class="event-registration__field">
-        <label for="name">
-          Name <span aria-label="Pflichtfeld">*</span>
-        </label>
-        <input
-          autocomplete="name"
-          class="event-registration__input"
-          id="name"
-          name="name"
-          placeholder="Dein vollständiger Name"
-          type="text"
-          required
-          minlength="2"
-        />
-      </div>
-
-      <div class="event-registration__field">
-        <label for="email">
-          E-Mail <span aria-label="Pflichtfeld">*</span>
-        </label>
-        <input
-          autocomplete="email"
-          class="event-registration__input"
-          id="email"
-          name="email"
-          inputmode="email"
-          placeholder="deine@email.de"
-          type="email"
-          required
-        />
-      </div>
-
-      <div class="event-registration__field">
-        <label for="phone">
-          Telefon <span class="event-registration__optional">(optional)</span>
-        </label>
-        <input
-          autocomplete="tel"
-          class="event-registration__input"
-          id="phone"
-          name="phone"
-          inputmode="tel"
-          placeholder="+49 123 456789"
-          type="tel"
-        />
-      </div>
-
-      <div class="event-registration__field">
-        <label for="message">
-          Nachricht <span class="event-registration__optional">(optional)</span>
-        </label>
-        <textarea
-          class="event-registration__textarea"
-          id="message"
-          name="message"
-          placeholder="Hast du Fragen oder Anmerkungen?"
-          rows="4"
-          maxlength="500"
-        ></textarea>
-      </div>
-    </div>
-
-    <div
-      class="event-registration__message"
-      id="event-message"
-      role="alert"
+  <div class="registration-form__group">
+    <label
+      class="registration-form__label"
+      for="lastname"
     >
-    </div>
+      Nachname
+    </label>
+    <input
+      autocomplete="family-name"
+      class="registration-form__input"
+      id="lastname"
+      name="lastname"
+      placeholder="Nachname"
+      type="text"
+      required
+      minlength="2"
+    />
+  </div>
 
-    <p class="event-registration__privacy">
-      Mit der Anmeldung akzeptierst du unsere <a href={privacyHref}>Datenschutzbestimmungen</a>
-    </p>
-
-    <button
-      class="event-registration__submit"
-      type="submit"
+  <div class="registration-form__group">
+    <label
+      class="registration-form__label"
+      for="email"
     >
-      Jetzt anmelden
-    </button>
-  </form>
+      E-Mail
+    </label>
+    <input
+      autocomplete="email"
+      class="registration-form__input"
+      id="email"
+      name="email"
+      inputmode="email"
+      placeholder="E-Mail"
+      type="email"
+      required
+    />
+  </div>
 
   <div
-    class="event-registration__success"
-    id="event-success"
-    style="display:none"
+    class="event-registration__message"
+    id="event-message"
+    role="alert"
   >
-    <div
-      class="event-registration__success-icon"
-      aria-hidden="true"
-    >
-      <svg
-        fill="none"
-        height="96"
-        viewBox="0 0 72 72"
-        width="96"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx="36"
-          cy="36"
-          fill="#c17b5d"
-          r="36"
-          opacity="0.16"
-        ></circle>
-        <path
-          d="m22 36.5 8.5 8.5L50 25"
-          stroke="#c17b5d"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="5"
-        ></path>
-      </svg>
-    </div>
-    <h3 class="event-registration__success-title">Anmeldung erfolgreich!</h3>
-    <p class="event-registration__success-message">
-      Deine Anmeldung für <strong>{eventTitle}</strong> wurde erfolgreich übermittelt. Du erhältst in
-      Kürze eine Bestätigung per E-Mail.
-    </p>
-    <button
-      class="event-registration__success-back"
-      type="button"
-      id="event-reset"
-    >
-      Weitere Anmeldung
-    </button>
   </div>
+
+  <button
+    class="registration-form__submit registration-form__submit--large"
+    type="submit"
+  >
+    Platz reservieren
+  </button>
+
+  <p class="event-registration__privacy">
+    Nach dem Absenden erhältst du eine Bestätigungsmail mit allen Details.
+  </p>
+</form>
+
+<div
+  class="event-registration__success"
+  id="event-success"
+  style="display:none"
+>
+  <div
+    class="event-registration__success-icon"
+    aria-hidden="true"
+  >
+    <svg
+      fill="none"
+      height="96"
+      viewBox="0 0 72 72"
+      width="96"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="36"
+        cy="36"
+        fill="#c17b5d"
+        r="36"
+        opacity="0.16"
+      ></circle>
+      <path
+        d="m22 36.5 8.5 8.5L50 25"
+        stroke="#c17b5d"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="5"
+      ></path>
+    </svg>
+  </div>
+  <h3 class="event-registration__success-title">Anmeldung erfolgreich!</h3>
+  <p class="event-registration__success-message">
+    Deine Anmeldung für <strong>{eventTitle}</strong> wurde erfolgreich übermittelt. Du erhältst in Kürze
+    eine Bestätigung per E-Mail.
+  </p>
+  <button
+    class="event-registration__success-back"
+    type="button"
+    id="event-reset"
+  >
+    Weitere Anmeldung
+  </button>
 </div>
 
 <script>
@@ -172,12 +163,14 @@ const { eventId, eventTitle, privacyHref = "/datenschutz", className } = Astro.p
 
     try {
       const pb = new PocketBase(import.meta.env.PUBLIC_POCKETBASE_URL);
+      const firstname = formData.get("firstname") as string;
+      const lastname = formData.get("lastname") as string;
+      const name = `${firstname} ${lastname}`;
+
       await pb.collection("event_registrations").create({
         eventId: formData.get("eventId"),
-        name: formData.get("name"),
+        name: name,
         email: formData.get("email"),
-        phone: formData.get("phone") || undefined,
-        message: formData.get("message") || undefined,
         status: "pending",
       });
 

@@ -20,15 +20,22 @@ import {
 import { getUpcomingEvents } from "@lib/api/events";
 
 const upcomingEvents = await getUpcomingEvents();
+const nextEvent = upcomingEvents[0] || null;
+
+console.log("Next Event:", nextEvent);
 ---
 
 <BaseLayout
   description="Männerkreis in Straubing für persönliche Entwicklung. Authentischer Austausch in geschütztem Raum. Männergruppe Niederbayern mit monatlichen Treffen."
   title="Männerkreis Straubing Niederbayern - Persönliche Entwicklung für Männer"
+  cta={{
+    href: nextEvent ? `/events/${nextEvent.slug}` : "/#next-event",
+    label: "Nächstes Treffen →",
+  }}
 >
   <Hero
     content={heroContent}
-    event={upcomingEvents[0] || null}
+    event={nextEvent}
   />
   <Features items={features} />
   <Quote

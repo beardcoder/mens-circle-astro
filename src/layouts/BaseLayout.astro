@@ -1,7 +1,7 @@
 ---
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/layout/Footer.astro";
-import { navigationLinks as defaultNavLinks, nextEvent } from "../data";
+import { navigationLinks as defaultNavLinks } from "../data";
 import type { NavLink } from "../types";
 import "../styles/global.css";
 
@@ -10,6 +10,10 @@ type Props = {
   description?: string;
   canonicalPath?: string;
   navLinks?: NavLink[];
+  cta?: {
+    href?: string;
+    label?: string;
+  };
 };
 
 const {
@@ -17,6 +21,7 @@ const {
   description = "Männerkreis in Straubing für persönliche Entwicklung. Authentischer Austausch in geschütztem Raum. Männergruppe Niederbayern mit monatlichen Treffen.",
   canonicalPath = Astro.url.pathname,
   navLinks = defaultNavLinks,
+  cta,
 } = Astro.props;
 
 const canonicalUrl = new URL(canonicalPath, "https://mens-circle.de").toString();
@@ -98,7 +103,7 @@ const canonicalUrl = new URL(canonicalPath, "https://mens-circle.de").toString()
   <body>
     <NavBar
       activePath={Astro.url.pathname}
-      cta={{ href: nextEvent.ctaHref, label: "Nächstes Treffen →" }}
+      cta={{ href: cta?.href, label: cta?.label ?? "Nächstes Treffen →" }}
       links={navLinks}
     />
     <main

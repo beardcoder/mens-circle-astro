@@ -4,8 +4,8 @@ import type { NavLink } from "../types";
 interface Props {
   links: NavLink[];
   cta: {
-    href: string;
-    label: string;
+    href?: string;
+    label?: string;
   };
   activePath?: string;
 }
@@ -57,12 +57,16 @@ const { links, cta, activePath } = Astro.props;
         ))
       }
       <li>
-        <a
-          class="nav__link nav__link--cta"
-          href={cta.href}
-        >
-          {cta.label}
-        </a>
+        {
+          cta.href && (
+            <a
+              class="nav__link nav__link--cta"
+              href={cta.href}
+            >
+              {cta.label}
+            </a>
+          )
+        }
       </li>
     </ul>
   </div>

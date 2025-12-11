@@ -4,23 +4,23 @@
  * @param locale - Locale for formatting (default: 'de-DE')
  */
 export function formatDate(dateString: string, locale = "de-DE"): string {
-  const date = new Date(`${dateString}T00:00:00`);
+  const date = new Date(dateString);
   return date.toLocaleDateString(locale, {
     year: "numeric",
     month: "long",
     day: "numeric",
-    timeZone: "UTC",
   });
 }
 
 /**
  * Extract day, month, and year from a date string
  */
-export function getDateParts(dateString: string) {
-  const date = new Date(`${dateString}T00:00:00`);
+export function getDateParts(dateString: string, locale = "de-DE") {
+  const date = new Date(dateString);
   return {
     day: date.getUTCDate().toString().padStart(2, "0"),
-    month: date.toLocaleString("en-US", { month: "long", timeZone: "UTC" }),
+    month: date.toLocaleString(locale, { month: "long" }),
     year: date.getUTCFullYear(),
+    time: date.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" }),
   };
 }

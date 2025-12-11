@@ -12,82 +12,42 @@ const { privacyHref, className } = Astro.props;
     class:list={[className ?? "newsletter__form"]}
     id="newsletter-form"
   >
-    <div class="newsletter__fields">
-      <div class="newsletter__row">
-        <div class="newsletter__field">
-          <label
-            class="sr-only"
-            for="firstName"
-            >Vorname</label
-          >
-          <input
-            autocomplete="given-name"
-            class="newsletter__input"
-            id="firstName"
-            name="firstName"
-            placeholder="Vorname"
-            type="text"
-            required
-            minlength="2"
-          />
-        </div>
-        <div class="newsletter__field">
-          <label
-            class="sr-only"
-            for="lastName"
-            >Nachname</label
-          >
-          <input
-            autocomplete="family-name"
-            class="newsletter__input"
-            id="lastName"
-            name="lastName"
-            placeholder="Nachname"
-            type="text"
-            required
-            minlength="2"
-          />
-        </div>
-      </div>
-      <div class="newsletter__row">
-        <div class="newsletter__field newsletter__field--email">
-          <label
-            class="sr-only"
-            for="email"
-            >E-Mail</label
-          >
-          <input
-            autocomplete="email"
-            class="newsletter__input newsletter__input--email"
-            id="email"
-            name="email"
-            inputmode="email"
-            placeholder="deine@email.de"
-            type="email"
-            required
-          />
-        </div>
-        <button
-          aria-label="Newsletter abonnieren"
-          class="newsletter__submit"
-          type="submit"
+    <div class="newsletter__input-group">
+      <label
+        class="sr-only"
+        for="email"
+        >E-Mail</label
+      >
+      <input
+        autocomplete="email"
+        class="newsletter__input"
+        id="email"
+        name="email"
+        inputmode="email"
+        placeholder="deine@email.de"
+        type="email"
+        required
+      />
+      <button
+        aria-label="Newsletter abonnieren"
+        class="newsletter__submit"
+        type="submit"
+      >
+        <svg
+          aria-hidden="true"
+          class="newsletter__icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <svg
-            aria-hidden="true"
-            class="newsletter__icon"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M5 12h14M12 5l7 7-7 7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            ></path>
-          </svg>
-        </button>
-      </div>
+          <path
+            d="M5 12h14M12 5l7 7-7 7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          ></path>
+        </svg>
+      </button>
     </div>
 
     <div
@@ -176,17 +136,14 @@ const { privacyHref, className } = Astro.props;
     if (message) message.textContent = "";
 
     const formData = new FormData(form);
-    const firstName = formData.get("firstName") as string;
-    const lastName = formData.get("lastName") as string;
     const email = formData.get("email") as string;
-    const fullName = `${firstName} ${lastName}`.trim();
 
     const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
     if (submitBtn) submitBtn.disabled = true;
 
     try {
       const pb = new PocketBase(import.meta.env.PUBLIC_POCKETBASE_URL);
-      await pb.collection("newsletter_subscribers").create({ email, name: fullName });
+      await pb.collection("newsletter_subscribers").create({ email });
 
       form.style.display = "none";
       if (success) success.style.display = "block";

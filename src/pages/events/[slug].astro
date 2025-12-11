@@ -1,13 +1,14 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import EventRegistrationForm from "@components/EventRegistrationForm.astro";
-import { getEventBySlug, getPublishedEvents } from "@lib/api/events";
+import { getEventBySlug, getUpcomingEvents } from "@lib/api/events";
 import { formatDate } from "@utils/date";
+import { getDateParts } from "@utils/date";
 
 export async function getStaticPaths() {
   try {
     // Fetch all published events from PocketBase for static generation
-    const events = await getPublishedEvents();
+    const events = await getUpcomingEvents();
 
     if (events.length === 0) {
       console.warn("No events found in PocketBase. Returning empty array.");
@@ -39,7 +40,8 @@ if (!event) {
   return Astro.redirect("/404");
 }
 
-const formattedDate = formatDate(event.date, "de-DE");
+const formattedDate = formatDate(event.start_date, "de-DE");
+const { time } = getDateParts(event.start_date, "de-DE");
 ---
 
 <BaseLayout
@@ -55,81 +57,84 @@ const formattedDate = formatDate(event.date, "de-DE");
     <div class="registration-hero__content">
       <div class="registration-hero__text reveal-text">
         <span class="registration-hero__label">Männerkreis</span>
-        <h1 class="registration-hero__title">{event.title}</h1>
-        <p class="registration-hero__date">{formattedDate}</p>
-        <p class="registration-hero__description">
-          {event.description}
-        </p>
 
-        <div class="registration-hero__details">
-          <div class="registration-hero__detail">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle
-                cx="12"
-                cy="10"
-                r="3"
-              ></circle>
-            </svg>
-            <span>{event.location}</span>
+        <h1 class="registration-hero__title">Melde dich jetzt an</h1>
+
+        <div class="registration-hero__event-card">
+          <p class="registration-hero__date">{formattedDate}</p>
+
+          <p class="registration-hero__description">
+            {event.description}
+          </p>
+          <div class="registration-hero__details">
+            <div class="registration-hero__detail">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle
+                  cx="12"
+                  cy="10"
+                  r="3"
+                ></circle>
+              </svg>
+              <span
+                >{event.expand.location.title},
+                {event.expand.location.address}</span
+              >
+            </div>
+            <div class="registration-hero__detail">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                ></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>{time}</span>
+            </div>
+            <div class="registration-hero__detail">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle
+                  cx="9"
+                  cy="7"
+                  r="4"
+                ></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span>Max. 12 Teilnehmer</span>
+            </div>
+            <div class="registration-hero__detail">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2v20M2 12h20"></path>
+              </svg>
+              <span>Spendenbasis</span>
+            </div>
           </div>
-          <div class="registration-hero__detail">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-              ></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-            <span>{event.time}</span>
-          </div>
-          {
-            event.maxParticipants && (
-              <div class="registration-hero__detail">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                  <circle
-                    cx="9"
-                    cy="7"
-                    r="4"
-                  />
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-                <span>Max. {event.maxParticipants} Teilnehmer</span>
-              </div>
-            )
-          }
-          <div class="registration-hero__detail">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2v20M2 12h20"></path>
-            </svg>
-            <span>Spendenbasis</span>
-          </div>
-          <div class="event-card__actions">
+          <div class="registration-hero__event-actions">
             <a
-              href="/api/event/12/ical"
+              href={`/api/event/${event.id}/ical`}
               class="btn btn--on-color"
               download
             >

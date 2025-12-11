@@ -18,12 +18,23 @@ export interface Event {
   slug: string;
   title: string;
   description: string;
-  date: string; // ISO date string
+  start_date: string; // ISO date string
+  end_date: string; // ISO date string
   location: string;
-  time: string; // e.g., "19:00 - 22:00"
-  maxParticipants?: number;
-  currentParticipants?: number;
-  status: "draft" | "published" | "cancelled" | "full";
+  expand: {
+    location: {
+      address: string;
+      city: string;
+      collectionId: string;
+      collectionName: string;
+      created: string;
+      geo: { lat: number; lng: number };
+      id: string;
+      title: string;
+      updated: string;
+      zip: string;
+    };
+  };
   created?: string;
   updated?: string;
 }

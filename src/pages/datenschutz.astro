@@ -1,10 +1,18 @@
 ---
+import { getUpcomingEvents } from "@/lib/api/events";
 import BaseLayout from "@layouts/BaseLayout.astro";
+
+const upcomingEvents = await getUpcomingEvents();
+const nextEvent = upcomingEvents[0] || null;
 ---
 
 <BaseLayout
   title="Datenschutz: Men’s Circle Niederbayern"
   description="Datenschutzerklärung des Männerkreis Niederbayern."
+  cta={{
+    href: nextEvent ? `/events/${nextEvent.slug}` : "/#next-event",
+    label: "Nächstes Treffen →",
+  }}
   canonicalPath="/datenschutz"
 >
   <section class="c-text">
