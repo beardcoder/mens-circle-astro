@@ -3,9 +3,6 @@
 	encode gzip
 	file_server
 	
-	# SPA fallback for client-side routing (if needed)
-	try_files {path} {path}/ /index.html
-	
 	# Cache static assets
 	@static {
 		path *.css *.js *.jpg *.jpeg *.png *.gif *.webp *.svg *.ico *.woff *.woff2 *.ttf
