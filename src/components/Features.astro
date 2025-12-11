@@ -1,0 +1,20 @@
+---
+import FeatureCard from "./FeatureCard.astro";
+import type { FeatureCardContent } from "../types";
+
+type Props = {
+  items: FeatureCardContent[];
+};
+
+const { items } = Astro.props;
+---
+
+<section class="features" id="c">
+  <header class="features__intro">
+    <h2 class="section__title reveal-text">Was ist ein Männerkreis?</h2>
+  </header>
+
+  <div class="features__grid">
+    {items.map((feature) => <FeatureCard feature={feature} />)}
+  </div>
+</section>

@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import type { HeroContent } from "../types";
+
+type Props = {
+  content: HeroContent;
+};
+
+const { content } = Astro.props;
+---
+
+<section class="hero" id="c2">
+  <div class="hero__content">
+    <div class="hero__text">
+      <span class="hero__label animate-in">{content.label}</span>
+      <h1 class="hero__title animate-in">
+        {content.title}
+        <span class="hero__title--highlight">{content.highlight}</span>
+      </h1>
+      <div class="hero__description animate-in">
+        <p>{content.description}</p>
+      </div>
+      <a class="hero__cta animate-in" href={content.cta.href}>
+        {content.cta.label}
+      </a>
+    </div>
+  </div>
+  <div class="hero__image animate-in">
+    <div class="hero__image-wrapper" data-parallax="0.2">
+      <Image
+        alt="Männer in authentischem Austausch beim Männerkreis in Straubing"
+        class="hero__img"
+        decoding="async"
+        fetchpriority="high"
+        loading="eager"
+        src={content.image}
+        sizes="(min-width: 1280px) 50vw, 100vw"
+      />
+    </div>
+  </div>
+</section>

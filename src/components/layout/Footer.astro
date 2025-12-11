@@ -1,0 +1,48 @@
+---
+import type { NavLink } from "../../types";
+
+type Props = {
+  links?: NavLink[];
+  year?: number;
+};
+
+const { links = [], year = new Date().getFullYear() } = Astro.props;
+const footerLinks =
+  links.length > 0
+    ? links
+    : [
+        { href: "/", label: "Home" },
+        { href: "/impressum", label: "Impressum" },
+        { href: "/datenschutz", label: "Datenschutz" },
+      ];
+---
+
+<footer class="footer">
+  <div class="footer__content">
+    <div class="footer__main">
+      <div class="footer__brand">
+        <p class="footer__logo">MÄNNERKREIS</p>
+        <p class="footer__tagline">
+          Ein Raum für echte Begegnungen, persönliches Wachstum und tiefe Verbindungen unter Männern.
+        </p>
+      </div>
+
+      <nav aria-label="Footer Navigation" class="footer__nav">
+        <div class="footer__nav-group">
+          <p class="footer__nav-title">Navigation</p>
+          <ul class="footer__nav-list">
+            {footerLinks.map((link) => (
+              <li>
+                <a href={link.href} title={link.label}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© {year} Männerkreis</p>
+    </div>
+  </div>
+</footer>

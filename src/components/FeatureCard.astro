@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import type { FeatureCardContent } from "../types";
+
+type Props = {
+  feature: FeatureCardContent;
+};
+
+const { feature } = Astro.props;
+const hasImage = Boolean(feature.image);
+const classes = ["feature-card", "reveal-card", feature.variant === "large" ? "feature-card--large" : "feature-card--text"];
+---
+
+<article class={classes.join(" ")} id={feature.id}>
+  {hasImage && (
+    <div class="feature-card__image">
+      <Image alt={feature.label || feature.title} class="feature-card__img" loading="lazy" decoding="async" src={feature.image!} />
+    </div>
+  )}
+  <div class="feature-card__content">
+    {feature.label && <span class="feature-card__label">{feature.label}</span>}
+    <h3 class="feature-card__title">{feature.title}</h3>
+    <p set:html={feature.description}></p>
+  </div>
+</article>

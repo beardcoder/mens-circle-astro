@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EventRegistrationForm from '../../components/EventRegistrationForm';
+import { getEventBySlug, getPublishedEvents } from '../../lib/api/events';
+import { formatDate } from '../../utils/date';
+
+export async function getStaticPaths() {
+  try {
+    // Fetch all published events from PocketBase for static generation
+    const events = await getPublishedEvents();
+
+    if (events.length === 0) {
+      console.warn('No events found in PocketBase. Returning empty array.');
+      return [];
+    }
+
+    return events.map(event => ({
+      params: { slug: event.slug },
+    }));
+  } catch (error) {
+    console.error('Failed to fetch events for static paths:', error);
+    // Return empty array as fallback
+    return [];
+  }
+}
+
+const slug = Astro.params.slug || '';
+const event = await getEventBySlug(slug);
+
+if (!event) {
+  return Astro.redirect('/404');
+}
+
+const formattedDate = formatDate(event.date, 'de-DE');
+---
+
+<BaseLayout
+  title={`${event.title} – ${formattedDate}`}
+  description={event.description}
+  canonicalPath={`/events/${event.slug}`}
+>
+  <section class="registration-hero">
+    <div class="registration-hero__background">
+      <div class="registration-hero__pattern"></div>
+    </div>
+
+    <div class="registration-hero__content">
+      <div class="registration-hero__text reveal-text">
+        <span class="registration-hero__label">Männerkreis</span>
+        <h1 class="registration-hero__title">{event.title}</h1>
+        <p class="registration-hero__date">{formattedDate}</p>
+        <p class="registration-hero__description">
+          {event.description}
+        </p>
+
+        <div class="registration-hero__details">
+          <div class="registration-hero__detail">
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle
+                cx="12"
+                cy="10"
+                r="3"
+              ></circle>
+            </svg>
+            <span>{event.location}</span>
+          </div>
+          <div class="registration-hero__detail">
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              ></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>{event.time}</span>
+          </div>
+          {event.maxParticipants && (
+            <div class="registration-hero__detail">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle
+                  cx="9"
+                  cy="7"
+                  r="4"
+                ></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span>Max. {event.maxParticipants} Teilnehmer</span>
+            </div>
+          )}
+          <div class="registration-hero__detail">
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2v20M2 12h20"></path>
+            </svg>
+            <span>Spendenbasis</span>
+          </div>
+          <div class="event-card__actions">
+            <a
+              href="/api/event/12/ical"
+              class="btn btn--on-color"
+              download
+            >
+              In Kalender speichern
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="registration-hero__form-wrapper reveal-card">
+        <h2 class="registration-hero__form-title">
+          Sichere dir deinen Platz
+        </h2>
+        <EventRegistrationForm
+          client:visible
+          eventId={event.id!}
+          eventTitle={event.title}
+          className="registration-hero__form"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
