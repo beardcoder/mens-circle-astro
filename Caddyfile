@@ -1,5 +1,5 @@
 :80 {
-	root * /srv
+	root * /app
 	encode gzip
 	file_server
 	

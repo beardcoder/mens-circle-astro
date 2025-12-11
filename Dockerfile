@@ -16,10 +16,10 @@ COPY . .
 RUN bun run build
 
 # Production Stage
-FROM caddy:2-alpine
+FROM caddy:2.11-alpine
 
 # Copy built files from builder
-COPY --from=builder /app/dist /srv
+COPY --from=builder /app/dist /app
 
 # Copy Caddyfile
 COPY Caddyfile /etc/caddy/Caddyfile
