@@ -12,18 +12,18 @@ const { label, title, description, privacyHref } = Astro.props;
 ---
 
 <section
-  class="newsletter"
+  class="relative overflow-hidden bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-clay)] py-[var(--spacing-3xl)] px-[var(--container-padding)]"
   id="contact"
 >
-  <div class="newsletter__content">
-    <div class="newsletter__text reveal-text is-visible">
-      <span class="newsletter__label">{label}</span>
-      <h2 class="section__title">{title}</h2>
-      <p class="newsletter__description">{description}</p>
+  <div class="max-w-[var(--container-max)] mx-auto grid md:grid-cols-2 gap-[var(--spacing-2xl)] items-center">
+    <div class="reveal-text is-visible text-[var(--color-white)]">
+      <span class="inline-block px-6 py-2 rounded-full bg-[color-mix(in_srgb,var(--color-white)_10%,transparent)] text-[color-mix(in_srgb,var(--color-white)_90%,transparent)] uppercase tracking-[0.15em] text-sm font-bold mb-[var(--spacing-md)]">{label}</span>
+      <h2 class="font-display text-[var(--font-size-4xl)] font-black leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] mb-[var(--spacing-md)] text-[var(--color-white)]">{title}</h2>
+      <p class="text-[color-mix(in_srgb,var(--color-white)_90%,transparent)] text-lg leading-[var(--line-height-relaxed)] max-w-[60ch]">{description}</p>
     </div>
 
     <NewsletterForm
-      className="newsletter__form reveal-card is-visible"
+      className="reveal-card is-visible flex flex-col gap-4"
       privacyHref={privacyHref}
     />
   </div>

@@ -8,23 +8,21 @@ type Props = {
 
 const { feature } = Astro.props;
 const hasImage = Boolean(feature.image);
-const classes = [
-  "feature-card",
-  "reveal-card",
-  feature.variant === "large" ? "feature-card--large" : "feature-card--text",
-];
 ---
 
 <article
-  class={classes.join(" ")}
+  class:list={[
+    "reveal-card bg-[var(--color-white)] dark:bg-[color-mix(in_srgb,#241d18_100%,transparent)] rounded-[var(--radius-xl)] shadow-[var(--shadow-md)] overflow-hidden transition-all duration-500 [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[var(--shadow-lg)]",
+    feature.variant === "large" ? "md:col-span-2" : ""
+  ]}
   id={feature.id}
 >
   {
     hasImage && (
-      <div class="feature-card__image">
+      <div class="overflow-hidden">
         <Image
           alt={feature.label || feature.title}
-          class="feature-card__img"
+          class="w-full h-64 object-cover transition-transform duration-500 hover:scale-105"
           loading="lazy"
           decoding="async"
           src={feature.image!}
@@ -32,9 +30,9 @@ const classes = [
       </div>
     )
   }
-  <div class="feature-card__content">
-    {feature.label && <span class="feature-card__label">{feature.label}</span>}
-    <h3 class="feature-card__title">{feature.title}</h3>
-    <p set:html={feature.description} />
+  <div class="p-[var(--spacing-xl)] flex flex-col gap-[var(--spacing-md)]">
+    {feature.label && <span class="inline-block text-[var(--color-primary)] dark:text-[var(--color-primary-light)] uppercase tracking-[0.1em] text-xs font-bold">{feature.label}</span>}
+    <h3 class="font-display text-[var(--font-size-2xl)] font-extrabold leading-[var(--line-height-snug)] text-[var(--color-text)]">{feature.title}</h3>
+    <p class="text-[var(--color-text-light)] text-base leading-[var(--line-height-relaxed)]" set:html={feature.description} />
   </div>
 </article>

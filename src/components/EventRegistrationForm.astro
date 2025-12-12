@@ -9,7 +9,7 @@ const { eventId, eventTitle, className } = Astro.props;
 ---
 
 <form
-  class:list={[className ?? "event-registration__form"]}
+  class:list={[className ?? "flex flex-col gap-[var(--spacing-lg)]"]}
   id="registration-hero__form"
 >
   <input
@@ -18,16 +18,16 @@ const { eventId, eventTitle, className } = Astro.props;
     value={eventId}
   />
 
-  <div class="registration-form__group">
+  <div class="flex flex-col gap-2">
     <label
-      class="registration-form__label"
+      class="text-[var(--color-text)] text-[0.9375rem] font-semibold"
       for="firstname"
     >
       Vorname
     </label>
     <input
       autocomplete="given-name"
-      class="registration-form__input"
+      class="bg-[var(--color-bg)] border-2 border-[var(--color-bg-dark)] rounded-[var(--radius-md)] text-[var(--color-text)] px-6 py-4 font-[inherit] text-[1.0625rem] transition-all duration-300 [transition-timing-function:var(--transition-smooth)] focus:bg-[var(--color-white)] dark:focus:bg-[color-mix(in_srgb,#241d18_100%,transparent)] focus:border-[var(--color-primary)] focus:outline-none focus:shadow-[0_0_0_4px_rgba(193,123,93,0.1)]"
       id="firstname"
       name="firstname"
       placeholder="Vorname"
@@ -37,16 +37,16 @@ const { eventId, eventTitle, className } = Astro.props;
     />
   </div>
 
-  <div class="registration-form__group">
+  <div class="flex flex-col gap-2">
     <label
-      class="registration-form__label"
+      class="text-[var(--color-text)] text-[0.9375rem] font-semibold"
       for="lastname"
     >
       Nachname
     </label>
     <input
       autocomplete="family-name"
-      class="registration-form__input"
+      class="bg-[var(--color-bg)] border-2 border-[var(--color-bg-dark)] rounded-[var(--radius-md)] text-[var(--color-text)] px-6 py-4 font-[inherit] text-[1.0625rem] transition-all duration-300 [transition-timing-function:var(--transition-smooth)] focus:bg-[var(--color-white)] dark:focus:bg-[color-mix(in_srgb,#241d18_100%,transparent)] focus:border-[var(--color-primary)] focus:outline-none focus:shadow-[0_0_0_4px_rgba(193,123,93,0.1)]"
       id="lastname"
       name="lastname"
       placeholder="Nachname"
@@ -56,16 +56,16 @@ const { eventId, eventTitle, className } = Astro.props;
     />
   </div>
 
-  <div class="registration-form__group">
+  <div class="flex flex-col gap-2">
     <label
-      class="registration-form__label"
+      class="text-[var(--color-text)] text-[0.9375rem] font-semibold"
       for="email"
     >
       E-Mail
     </label>
     <input
       autocomplete="email"
-      class="registration-form__input"
+      class="bg-[var(--color-bg)] border-2 border-[var(--color-bg-dark)] rounded-[var(--radius-md)] text-[var(--color-text)] px-6 py-4 font-[inherit] text-[1.0625rem] transition-all duration-300 [transition-timing-function:var(--transition-smooth)] focus:bg-[var(--color-white)] dark:focus:bg-[color-mix(in_srgb,#241d18_100%,transparent)] focus:border-[var(--color-primary)] focus:outline-none focus:shadow-[0_0_0_4px_rgba(193,123,93,0.1)]"
       id="email"
       name="email"
       inputmode="email"
@@ -76,31 +76,31 @@ const { eventId, eventTitle, className } = Astro.props;
   </div>
 
   <div
-    class="event-registration__message"
+    class="text-[var(--color-error)] text-sm mt-2"
     id="event-message"
     role="alert"
   >
   </div>
 
   <button
-    class="registration-form__submit registration-form__submit--large"
+    class="bg-[var(--gradient-primary)] rounded-full shadow-[var(--shadow-colored)] text-[var(--color-white)] cursor-pointer transition-all duration-300 [transition-timing-function:var(--transition-smooth)] border-none inline-flex justify-center items-center gap-3 mt-[var(--spacing-md)] px-12 py-6 text-xl font-bold hover:shadow-[var(--shadow-colored-lg)] hover:-translate-y-1 active:-translate-y-0.5"
     type="submit"
   >
     Platz reservieren
   </button>
 
-  <p class="event-registration__privacy">
+  <p class="text-[var(--color-text-light)] text-center mt-[var(--spacing-sm)] text-sm leading-[1.5]">
     Nach dem Absenden erhältst du eine Bestätigungsmail mit allen Details.
   </p>
 </form>
 
 <div
-  class="event-registration__success"
+  class="text-center hidden"
   id="event-success"
   style="display:none"
 >
   <div
-    class="event-registration__success-icon"
+    class="flex justify-center items-center mb-[var(--spacing-lg)] animate-[success-pulse_0.6s_cubic-bezier(0.23,1,0.32,1)]"
     aria-hidden="true"
   >
     <svg
@@ -126,19 +126,35 @@ const { eventId, eventTitle, className } = Astro.props;
       ></path>
     </svg>
   </div>
-  <h3 class="event-registration__success-title">Anmeldung erfolgreich!</h3>
-  <p class="event-registration__success-message">
+  <h3 class="text-[var(--color-primary)] dark:text-[var(--color-primary-light)] text-[var(--font-size-3xl)] font-bold leading-[var(--line-height-tight)] mb-[var(--spacing-md)]">Anmeldung erfolgreich!</h3>
+  <p class="text-[var(--color-text)] dark:text-[color-mix(in_srgb,var(--color-white)_90%,transparent)] text-lg leading-[var(--line-height-relaxed)] mb-[var(--spacing-xl)]">
     Deine Anmeldung für <strong>{eventTitle}</strong> wurde erfolgreich übermittelt. Du erhältst in Kürze
     eine Bestätigung per E-Mail.
   </p>
   <button
-    class="event-registration__success-back"
+    class="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] bg-transparent transition-all duration-300 [transition-timing-function:var(--transition-smooth)] hover:bg-[var(--color-primary)] hover:text-[var(--color-white)] hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(193,123,93,0.3)] font-semibold"
     type="button"
     id="event-reset"
   >
     Weitere Anmeldung
   </button>
 </div>
+
+<style>
+  @keyframes success-pulse {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
 
 <script>
   import PocketBase from "pocketbase";

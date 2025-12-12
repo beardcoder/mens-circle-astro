@@ -10,22 +10,22 @@ const { events } = Astro.props;
 ---
 
 <section
-  class="events"
+  class="bg-gradient-to-b from-[var(--color-bg)] to-[var(--color-bg-dark)] py-[var(--spacing-3xl)]"
   id="events"
 >
-  <header class="events__header">
-    <div class="events__header-text reveal-text">
-      <span class="events__label">NÄCHSTER TERMIN</span>
-      <h2 class="section__title">Kommendes Treffen</h2>
+  <header class="max-w-[var(--container-max)] mx-auto px-[var(--container-padding)] mb-[var(--spacing-xl)]">
+    <div class="reveal-text max-w-[700px]">
+      <span class="inline-block text-[color:var(--color-primary)] uppercase tracking-[0.15em] text-sm font-bold mb-[var(--spacing-sm)]">NÄCHSTER TERMIN</span>
+      <h2 class="font-display text-[length:var(--font-size-4xl)] font-black leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-[color:var(--color-text)]">Kommendes Treffen</h2>
     </div>
   </header>
 
-  <div class="events__container">
+  <div class="max-w-[var(--container-max)] mx-auto px-[var(--container-padding)] [container-type:inline-size] [container-name:events]">
     {
       events && events.length > 0 ? (
         events.map((event) => <EventCard event={event} />)
       ) : (
-        <p class="events__empty">Aktuell sind keine Termine geplant.</p>
+        <p class="text-center text-[var(--color-text-light)] text-lg py-[var(--spacing-2xl)]">Aktuell sind keine Termine geplant.</p>
       )
     }
   </div>

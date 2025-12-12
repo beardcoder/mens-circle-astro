@@ -13,30 +13,30 @@ type Props = {
 const { id, title, subtitle, paragraphs, image } = Astro.props;
 ---
 
-<div class="c-about" id={id}>
-  <div class="c-about__content about__content--half">
-    <div class="c-about__text-container">
-      <h2 class="c-header c-header--h2" data-animate="fadeDown">
+<div class="py-[var(--spacing-3xl)] px-[var(--container-padding)] bg-gradient-to-b from-[var(--color-bg)] to-[var(--color-bg-dark)]" id={id}>
+  <div class="max-w-[var(--container-max)] mx-auto grid md:grid-cols-2 gap-[var(--spacing-2xl)] items-center">
+    <div class="flex flex-col gap-[var(--spacing-lg)]">
+      <h2 class="font-display text-[var(--font-size-4xl)] font-black leading-[var(--line-height-tight)] text-[var(--color-text)]" data-animate="fadeDown">
         {title}
-        <span class="c-about__subheader">{subtitle}</span>
+        <span class="block text-[var(--font-size-2xl)] font-semibold text-[var(--color-primary)] dark:text-[var(--color-primary-light)] mt-2">{subtitle}</span>
       </h2>
 
-      <div data-animate="fadeUp">
+      <div class="flex flex-col gap-4 text-[var(--color-text-light)] text-base leading-[var(--line-height-relaxed)]" data-animate="fadeUp">
         {paragraphs.map((paragraph) => (
           <p set:html={paragraph}></p>
         ))}
       </div>
     </div>
-  </div>
-  <div class="c-about__content c-about__content--half">
-    <Image
-      alt={`${title} - Illustration`}
-      class="c-about__image"
-      data-animate="fadeUp"
-      loading="lazy"
-      decoding="async"
-      sizes="(min-width: 1024px) 45vw, 100vw"
-      src={image}
-    />
+    <div>
+      <Image
+        alt={`${title} - Illustration`}
+        class="w-full h-auto rounded-[var(--radius-2xl)] shadow-[var(--shadow-lg)]"
+        data-animate="fadeUp"
+        loading="lazy"
+        decoding="async"
+        sizes="(min-width: 1024px) 45vw, 100vw"
+        src={image}
+      />
+    </div>
   </div>
 </div>

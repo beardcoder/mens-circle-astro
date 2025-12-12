@@ -7,12 +7,12 @@ export interface Props {
 const { privacyHref, className } = Astro.props;
 ---
 
-<div class="newsletter-form-wrapper">
+<div>
   <form
-    class:list={[className ?? "newsletter__form"]}
+    class:list={[className ?? "flex flex-col gap-4"]}
     id="newsletter-form"
   >
-    <div class="newsletter__input-group">
+    <div class="relative flex items-stretch">
       <label
         class="sr-only"
         for="email"
@@ -20,7 +20,7 @@ const { privacyHref, className } = Astro.props;
       >
       <input
         autocomplete="email"
-        class="newsletter__input"
+        class="flex-1 px-6 py-4 rounded-full bg-[var(--color-white)] dark:bg-[color-mix(in_srgb,#2d2520_100%,transparent)] border-2 border-[color-mix(in_srgb,var(--color-primary)_20%,transparent)] dark:border-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] text-[var(--color-text)] text-base transition-all duration-300 [transition-timing-function:var(--transition-smooth)] focus:outline-none focus:border-[var(--color-primary)] dark:focus:border-[var(--color-primary-light)] focus:shadow-[0_0_0_4px_rgba(193,123,93,0.1)] pr-16"
         id="email"
         name="email"
         inputmode="email"
@@ -30,12 +30,12 @@ const { privacyHref, className } = Astro.props;
       />
       <button
         aria-label="Newsletter abonnieren"
-        class="newsletter__submit"
+        class="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[var(--gradient-primary)] text-[var(--color-white)] flex items-center justify-center transition-all duration-300 [transition-timing-function:var(--transition-smooth)] hover:shadow-[var(--shadow-colored)] hover:scale-110 active:scale-95 cursor-pointer border-none"
         type="submit"
       >
         <svg
           aria-hidden="true"
-          class="newsletter__icon"
+          class="w-5 h-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -51,24 +51,24 @@ const { privacyHref, className } = Astro.props;
     </div>
 
     <div
-      class="newsletter__message"
+      class="text-[var(--color-error)] text-sm"
       id="newsletter-message"
       role="alert"
     >
     </div>
 
-    <p class="newsletter__privacy">
-      Mit der Anmeldung akzeptierst du unsere <a href={privacyHref}>Datenschutzbestimmungen</a>
+    <p class="text-[var(--color-text-light)] text-sm">
+      Mit der Anmeldung akzeptierst du unsere <a href={privacyHref} class="text-[var(--color-primary)] dark:text-[var(--color-primary-light)] underline hover:no-underline">Datenschutzbestimmungen</a>
     </p>
   </form>
 
   <div
-    class="newsletter__success"
+    class="text-center hidden"
     id="newsletter-success"
     style="display:none"
   >
     <div
-      class="newsletter__success-icon"
+      class="flex justify-center items-center mb-[var(--spacing-lg)] animate-[success-pulse_0.6s_cubic-bezier(0.23,1,0.32,1)]"
       aria-hidden="true"
     >
       <svg
@@ -94,12 +94,12 @@ const { privacyHref, className } = Astro.props;
         ></path>
       </svg>
     </div>
-    <h3 class="newsletter__success-title">Danke für dein Vertrauen!</h3>
-    <p class="newsletter__success-message">
+    <h3 class="text-[var(--color-primary)] dark:text-[var(--color-primary-light)] text-2xl font-bold mb-4">Danke für dein Vertrauen!</h3>
+    <p class="text-[var(--color-text)] dark:text-[color-mix(in_srgb,var(--color-white)_90%,transparent)] mb-6">
       Du erhältst ab jetzt Inspirationen, Termine und Neuigkeiten direkt in dein Postfach.
     </p>
     <button
-      class="newsletter__success-back"
+      class="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] bg-transparent transition-all duration-300 [transition-timing-function:var(--transition-smooth)] hover:bg-[var(--color-primary)] hover:text-[var(--color-white)] hover:-translate-y-0.5 font-semibold cursor-pointer"
       type="button"
       id="newsletter-reset"
     >
@@ -122,6 +122,22 @@ const { privacyHref, className } = Astro.props;
     </button>
   </div>
 </div>
+
+<style>
+  @keyframes success-pulse {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
 
 <script>
   import PocketBase from "pocketbase";

@@ -17,12 +17,12 @@ const footerLinks =
       ];
 ---
 
-<footer class="footer">
-  <div class="footer__content">
-    <div class="footer__main">
-      <div class="footer__brand">
-        <p class="footer__logo">MÄNNERKREIS</p>
-        <p class="footer__tagline">
+<footer class="bg-[var(--color-earth)] dark:bg-[var(--color-bg-dark)] dark:border-t dark:border-[color-mix(in_srgb,var(--color-primary)_20%,transparent)] text-[var(--color-white)] py-[var(--spacing-xl)] px-[var(--container-padding)] pb-[var(--spacing-md)]">
+  <div class="max-w-[var(--container-max)] mx-auto">
+    <div class="flex flex-col gap-[var(--spacing-lg)] border-b border-[color-mix(in_srgb,var(--color-white)_15%,transparent)] pb-[var(--spacing-lg)] mb-[var(--spacing-md)]">
+      <div class="flex flex-col gap-[var(--spacing-md)]">
+        <p class="font-display text-xl font-bold tracking-[0.08em] text-[var(--color-white)]">MÄNNERKREIS</p>
+        <p class="text-[color-mix(in_srgb,var(--color-white)_65%,transparent)] max-w-[500px] text-[0.9375rem]">
           Ein Raum für echte Begegnungen, persönliches Wachstum und tiefe Verbindungen unter
           Männern.
         </p>
@@ -30,17 +30,18 @@ const footerLinks =
 
       <nav
         aria-label="Footer Navigation"
-        class="footer__nav"
+        class="flex flex-col lg:flex-row gap-[var(--spacing-2xl)]"
       >
-        <div class="footer__nav-group">
-          <p class="footer__nav-title">Navigation</p>
-          <ul class="footer__nav-list">
+        <div class="flex flex-col gap-[var(--spacing-sm)]">
+          <p class="text-[color-mix(in_srgb,var(--color-white)_50%,transparent)] uppercase tracking-[0.05em] text-sm font-semibold mb-1">Navigation</p>
+          <ul class="flex flex-col gap-2 list-none">
             {
               footerLinks.map((link) => (
                 <li>
                   <a
                     href={link.href}
                     title={link.label}
+                    class="text-[color-mix(in_srgb,var(--color-white)_75%,transparent)] hover:text-[var(--color-white)] transition-colors duration-300 [transition-timing-function:var(--transition-smooth)] text-[0.9375rem] no-underline"
                   >
                     {link.label}
                   </a>
@@ -52,7 +53,7 @@ const footerLinks =
       </nav>
     </div>
 
-    <div class="footer__bottom">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-[var(--spacing-sm)] pt-[var(--spacing-md)] text-[color-mix(in_srgb,var(--color-white)_50%,transparent)] text-[0.8125rem] text-center md:text-left">
       <p>© {year} Männerkreis</p>
     </div>
   </div>

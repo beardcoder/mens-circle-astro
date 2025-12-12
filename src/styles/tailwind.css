@@ -1,0 +1,346 @@
+@import "tailwindcss";
+
+/* Custom Tailwind Theme */
+@theme {
+  /* Custom Colors - Men's Circle Brand */
+  --color-primary: #c17b5d;
+  --color-primary-dark: #a05d3f;
+  --color-primary-light: #d89678;
+  --color-secondary: #8b7355;
+  --color-accent: #d4a574;
+  --color-accent-bright: #e8c89a;
+  --color-earth: light-dark(#4a4238, #e8d5c4);
+  --color-earth-light: light-dark(#6b5d52, #c7bfb4);
+  --color-clay: #a67c52;
+  --color-stone: #8c8174;
+  --color-forest: #5b6c5d;
+  --color-forest-dark: #3d4a3e;
+  --color-success: #4caf50;
+  --color-error: #d32f2f;
+  --color-info: #2196f3;
+  --color-warning: #ff9800;
+
+  /* Background & Text */
+  --color-bg: light-dark(#f5f1eb, #1a1410);
+  --color-bg-dark: light-dark(#e8e1d6, #0f0b08);
+  --color-text: light-dark(#2d2520, #f5f1eb);
+  --color-text-light: light-dark(#5d524a, #c7bfb4);
+  --color-white: #fffdf9;
+
+  /* Extend Tailwind Colors - Map to standard color names */
+  --color-brand-50: oklch(0.95 0.01 40);
+  --color-brand-100: oklch(0.9 0.02 40);
+  --color-brand-200: oklch(0.8 0.04 40);
+  --color-brand-300: oklch(0.7 0.06 40);
+  --color-brand-400: oklch(0.6 0.08 40);
+  --color-brand-500: #c17b5d;
+  --color-brand-600: #a05d3f;
+  --color-brand-700: oklch(0.4 0.08 40);
+  --color-brand-800: oklch(0.3 0.06 40);
+  --color-brand-900: oklch(0.2 0.04 40);
+  --color-brand-950: oklch(0.15 0.02 40);
+
+  /* Font Families */
+  --font-sans:
+    "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Inter Variable", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Font Sizes - Fluid Typography */
+  --font-size-xs: clamp(0.75rem, 1.5vi, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 1.75vi, 1rem);
+  --font-size-base: clamp(1rem, 2vi, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 2.25vi, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 2.5vi, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 3vi, 2rem);
+  --font-size-3xl: clamp(2rem, 4vi, 2.5rem);
+  --font-size-4xl: clamp(2rem, 5vi, 3.5rem);
+  --font-size-5xl: clamp(2.5rem, 6vi, 4.5rem);
+  --font-size-6xl: clamp(3rem, 7vi, 6rem);
+
+  /* Line Heights */
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.3;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.7;
+  --line-height-loose: 2;
+
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-wider: 0.1em;
+  --letter-spacing-widest: 0.15em;
+
+  /* Spacing Scale - Fluid */
+  --spacing-xs: clamp(0.5rem, 2vi, 0.75rem);
+  --spacing-sm: clamp(0.75rem, 3vi, 1rem);
+  --spacing-md: clamp(1rem, 4vi, 1.5rem);
+  --spacing-lg: clamp(1.5rem, 6vi, 3rem);
+  --spacing-xl: clamp(2rem, 8vi, 4rem);
+  --spacing-2xl: clamp(3rem, 10vi, 6rem);
+  --spacing-3xl: clamp(4rem, 12vi, 8rem);
+
+  /* Container */
+  --container-max: 1400px;
+  --container-padding: clamp(1.5rem, 5vi, 3rem);
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-DEFAULT: 0.75rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-elastic: cubic-bezier(0.68, -0.3, 0.265, 1.3);
+  --transition-snappy: cubic-bezier(0.2, 0.9, 0.3, 1);
+
+  /* Shadows */
+  --shadow-sm: light-dark(0 2px 8px rgb(45 37 32 / 0.06), 0 2px 8px rgb(0 0 0 / 0.3));
+  --shadow-DEFAULT: light-dark(0 4px 16px rgb(45 37 32 / 0.08), 0 4px 16px rgb(0 0 0 / 0.4));
+  --shadow-md: light-dark(0 4px 16px rgb(45 37 32 / 0.08), 0 4px 16px rgb(0 0 0 / 0.4));
+  --shadow-lg: light-dark(0 8px 32px rgb(45 37 32 / 0.12), 0 8px 32px rgb(0 0 0 / 0.5));
+  --shadow-xl: light-dark(0 16px 48px rgb(45 37 32 / 0.16), 0 16px 48px rgb(0 0 0 / 0.6));
+  --shadow-colored: light-dark(0 8px 24px rgb(193 123 93 / 0.15), 0 8px 24px rgb(193 123 93 / 0.3));
+  --shadow-colored-lg: light-dark(
+    0 16px 48px rgb(193 123 93 / 0.2),
+    0 16px 48px rgb(193 123 93 / 0.4)
+  );
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #c17b5d 0%, #a67c52 100%);
+  --gradient-warm: linear-gradient(135deg, #d4a574 0%, #c17b5d 50%, #8b7355 100%);
+  --gradient-earth: linear-gradient(135deg, #4a4238 0%, #3d4a3e 100%);
+  --gradient-radial: radial-gradient(circle, rgb(193 123 93 / 0.12) 0%, transparent 70%);
+}
+
+/* Base Styles */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  body {
+    background-attachment: fixed;
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(circle at 20% 50%, rgb(193 123 93 / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgb(212 165 116 / 0.03) 0%, transparent 50%);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1;
+    font-size: var(--font-size-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: var(--line-height-relaxed);
+    overflow-x: hidden;
+    text-rendering: optimizelegibility;
+    transition:
+      background-color 0.3s var(--transition-smooth),
+      color 0.3s var(--transition-smooth);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+    max-inline-size: 30ch;
+    font-family: var(--font-display);
+  }
+
+  p,
+  li,
+  blockquote,
+  figcaption {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: light-dark(var(--color-primary-dark), var(--color-primary-light));
+    cursor: pointer;
+    text-decoration-skip-ink: auto;
+    text-underline-offset: 0.2em;
+    transition: color 0.2s var(--transition-smooth);
+  }
+
+  a:hover {
+    color: var(--color-primary);
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  button {
+    cursor: pointer;
+    font: inherit;
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+    accent-color: var(--color-primary);
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    height: auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  /* View Transitions */
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.4s;
+    animation-timing-function: var(--transition-smooth);
+  }
+
+  /* Animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-card,
+    .reveal-text,
+    .animate-in {
+      opacity: 1;
+      transition:
+        opacity 0.6s var(--transition-smooth),
+        transform 0.6s var(--transition-smooth);
+      transform: translateY(0);
+    }
+
+    @starting-style {
+      .reveal-card,
+      .reveal-text,
+      .animate-in {
+        opacity: 0;
+        transform: translateY(1rem);
+      }
+    }
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  /* Selection */
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-dark);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border: 2px solid var(--color-bg-dark);
+    border-radius: var(--radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-dark);
+  }
+
+  /* Focus Visible */
+  :focus-visible {
+    border-radius: var(--radius-sm);
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    :root {
+      --color-primary: #b8653d;
+      --color-text: #000;
+      --color-bg: #fff;
+    }
+
+    .feature-card,
+    .testimonial,
+    .event-card,
+    .faq__item,
+    .contact__form {
+      border: 2px solid var(--color-text);
+    }
+  }
+
+  /* Print Styles */
+  @media print {
+    .nav,
+    .hero__scroll,
+    .contact__form,
+    .footer__social {
+      display: none;
+    }
+
+    body {
+      color: #000;
+      background: #fff;
+    }
+
+    .section {
+      break-inside: avoid;
+    }
+  }
+}

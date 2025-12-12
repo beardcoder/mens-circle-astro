@@ -15,40 +15,43 @@ const { links, cta, activePath } = Astro.props;
 
 <nav
   aria-label="Hauptnavigation"
-  class="nav"
+  class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-[20px] backdrop-saturate-[180%] bg-[color-mix(in_srgb,var(--color-white)_92%,transparent)] dark:bg-[color-mix(in_srgb,#1a1410_92%,transparent)] border-b border-[color-mix(in_srgb,var(--color-primary)_8%,transparent)] dark:border-[color-mix(in_srgb,var(--color-primary)_15%,transparent)] transition-all duration-400 [transition-timing-function:var(--transition-smooth)]"
   id="nav"
 >
-  <div class="nav__container">
+  <div class="max-w-[var(--container-max)] mx-auto px-[var(--container-padding)] py-4 flex justify-between items-center gap-8 md:py-4">
     <a
       aria-label="Männerkreis Startseite"
-      class="nav__logo"
+      class="relative z-[1001] flex items-center gap-3 font-display text-[clamp(1.25rem,3vi,1.625rem)] font-extrabold tracking-[0.1em] text-[var(--color-earth)] transition-all duration-400 [transition-timing-function:var(--transition-smooth)] hover:text-[var(--color-primary)] hover:-translate-y-0.5 no-underline"
       href="/"
     >
-      <span class="nav__logo-text">MÄNNERKREIS</span>
+      <span class="bg-gradient-to-br from-[var(--color-earth)] to-[var(--color-primary)] bg-clip-text text-transparent">MÄNNERKREIS</span>
     </a>
 
     <button
       aria-controls="navMenu"
       aria-expanded="false"
       aria-label="Navigation öffnen"
-      class="nav__toggle"
+      class="nav-toggle relative z-[1001] flex flex-col justify-between h-8 w-10 p-1 bg-transparent border-none cursor-pointer md:hidden"
       type="button"
       id="navToggle"
     >
-      <span class="nav__toggle-line"></span>
-      <span class="nav__toggle-line"></span>
-      <span class="nav__toggle-line"></span>
+      <span class="block h-0.5 w-full bg-[var(--color-earth)] rounded-sm transition-all duration-300 [transition-timing-function:var(--transition-smooth)] origin-center"></span>
+      <span class="block h-0.5 w-full bg-[var(--color-earth)] rounded-sm transition-all duration-300 [transition-timing-function:var(--transition-smooth)] origin-center"></span>
+      <span class="block h-0.5 w-full bg-[var(--color-earth)] rounded-sm transition-all duration-300 [transition-timing-function:var(--transition-smooth)] origin-center"></span>
     </button>
 
     <ul
-      class="nav__menu"
+      class="fixed md:static top-0 bottom-0 right-0 md:right-auto w-[min(85vw,350px)] md:w-auto flex flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-[clamp(1.25rem,3vi,2.5rem)] m-0 p-0 pt-20 px-8 pb-8 md:p-0 list-none backdrop-blur-[40px] md:backdrop-blur-0 bg-[color-mix(in_srgb,var(--color-white)_98%,transparent)] dark:bg-[color-mix(in_srgb,#1a1410_98%,transparent)] md:bg-transparent translate-x-full md:translate-x-0 transition-transform duration-400 [transition-timing-function:var(--transition-smooth)] shadow-[-4px_0_24px_rgba(0,0,0,0.15)] md:shadow-none overflow-y-auto md:overflow-visible"
       id="navMenu"
     >
       {
         links.map((link) => (
-          <li>
+          <li class="border-b border-[color-mix(in_srgb,var(--color-primary)_8%,transparent)] dark:border-[color-mix(in_srgb,var(--color-primary)_15%,transparent)] md:border-0 w-full md:w-auto last:border-0 last:mt-4 md:last:mt-0">
             <a
-              class:list={["nav__link", { "is-active": activePath === link.href }]}
+              class:list={[
+                "relative inline-block md:inline-block w-full md:w-auto py-4 md:py-2 px-0 text-base md:text-base font-medium text-[var(--color-text)] no-underline transition-colors duration-300 [transition-timing-function:var(--transition-smooth)] hover:text-[var(--color-primary)] after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-[var(--color-primary)] after:to-[var(--color-accent)] after:rounded-sm after:transition-[width] after:duration-400 after:[transition-timing-function:var(--transition-bounce)] hover:after:w-full after:md:block after:hidden",
+                { "text-[var(--color-primary)] after:w-full": activePath === link.href }
+              ]}
               href={link.href}
             >
               {link.label}
@@ -56,11 +59,11 @@ const { links, cta, activePath } = Astro.props;
           </li>
         ))
       }
-      <li>
+      <li class="w-full md:w-auto">
         {
           cta.href && (
             <a
-              class="nav__link nav__link--cta"
+              class="block md:inline-flex text-center mt-2 md:mt-0 px-6 py-2.5 rounded-full bg-[var(--color-primary)] text-[var(--color-white)] font-medium text-base no-underline transition-all duration-300 [transition-timing-function:var(--transition-smooth)] shadow-[0_2px_8px_rgba(193,123,93,0.2)] hover:bg-[color-mix(in_srgb,var(--color-primary-dark)_100%,transparent)] dark:hover:bg-[color-mix(in_srgb,var(--color-primary-light)_100%,transparent)] hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(193,123,93,0.3)] after:hidden"
               href={cta.href}
             >
               {cta.label}
@@ -76,7 +79,8 @@ const { links, cta, activePath } = Astro.props;
   const nav = document.getElementById("nav");
   const navToggle = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
-  const navLinks = document.querySelectorAll(".nav__link");
+  const navLinks = navMenu?.querySelectorAll("a");
+  const toggleLines = navToggle?.querySelectorAll("span");
 
   let isOpen = false;
   let lastScrollY = 0;
@@ -93,15 +97,29 @@ const { links, cta, activePath } = Astro.props;
 
   function updateMenuState() {
     if (isOpen) {
-      navToggle?.classList.add("is-active");
-      navMenu?.classList.add("is-active");
+      navMenu?.classList.remove("translate-x-full");
+      navMenu?.classList.add("translate-x-0");
       navToggle?.setAttribute("aria-expanded", "true");
-      document.body.classList.add("nav-open");
+      document.body.classList.add("overflow-hidden");
+
+      // Animate hamburger to X
+      if (toggleLines) {
+        toggleLines[0]?.classList.add("translate-x-[11px]");
+        toggleLines[1]?.classList.add("translate-x-[60px]");
+        toggleLines[2]?.classList.add("-translate-y-[11px]", "rotate-[-45deg]");
+      }
     } else {
-      navToggle?.classList.remove("is-active");
-      navMenu?.classList.remove("is-active");
+      navMenu?.classList.remove("translate-x-0");
+      navMenu?.classList.add("translate-x-full");
       navToggle?.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("nav-open");
+      document.body.classList.remove("overflow-hidden");
+
+      // Reset hamburger
+      if (toggleLines) {
+        toggleLines[0]?.classList.remove("translate-x-[11px]");
+        toggleLines[1]?.classList.remove("translate-x-[60px]");
+        toggleLines[2]?.classList.remove("-translate-y-[11px]", "rotate-[-45deg]");
+      }
     }
   }
 
@@ -111,15 +129,25 @@ const { links, cta, activePath } = Astro.props;
     const isHidden = current > lastScrollY && current > 120;
 
     if (isScrolled) {
-      nav?.classList.add("nav--scrolled");
+      nav?.classList.add("!bg-[color-mix(in_srgb,var(--color-white)_98%,transparent)]");
+      nav?.classList.add("dark:!bg-[color-mix(in_srgb,#1a1410_98%,transparent)]");
+      nav?.classList.add("!border-[color-mix(in_srgb,var(--color-primary)_15%,transparent)]");
+      nav?.classList.add("dark:!border-[color-mix(in_srgb,var(--color-primary)_25%,transparent)]");
+      nav?.classList.add("shadow-[0_8px_32px_rgba(45,37,32,0.12)]");
+      nav?.classList.add("dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]");
     } else {
-      nav?.classList.remove("nav--scrolled");
+      nav?.classList.remove("!bg-[color-mix(in_srgb,var(--color-white)_98%,transparent)]");
+      nav?.classList.remove("dark:!bg-[color-mix(in_srgb,#1a1410_98%,transparent)]");
+      nav?.classList.remove("!border-[color-mix(in_srgb,var(--color-primary)_15%,transparent)]");
+      nav?.classList.remove("dark:!border-[color-mix(in_srgb,var(--color-primary)_25%,transparent)]");
+      nav?.classList.remove("shadow-[0_8px_32px_rgba(45,37,32,0.12)]");
+      nav?.classList.remove("dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]");
     }
 
     if (isHidden) {
-      nav?.classList.add("nav--hidden");
+      nav?.classList.add("-translate-y-full");
     } else {
-      nav?.classList.remove("nav--hidden");
+      nav?.classList.remove("-translate-y-full");
     }
 
     lastScrollY = current;
@@ -127,7 +155,7 @@ const { links, cta, activePath } = Astro.props;
 
   navToggle?.addEventListener("click", toggleMenu);
 
-  navLinks.forEach((link) => {
+  navLinks?.forEach((link) => {
     link.addEventListener("click", closeMenu);
   });
 
@@ -136,3 +164,25 @@ const { links, cta, activePath } = Astro.props;
   // Initial check
   handleScroll();
 </script>
+
+<style>
+  /* Backdrop for mobile menu */
+  body.overflow-hidden::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    animation: fade-in 0.3s ease-in-out;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>

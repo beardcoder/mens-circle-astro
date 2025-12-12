@@ -15,33 +15,33 @@ const { id, title, description, steps, image } = Astro.props;
 ---
 
 <section
-  class="journey"
+  class="py-[var(--spacing-3xl)] px-[var(--container-padding)] bg-[var(--color-bg)]"
   id={id}
 >
-  <div class="journey__content">
-    <div class="journey__text reveal-text">
-      <span class="journey__label">DEINE REISE</span>
-      <h2 class="journey__title">{title}</h2>
-      <p class="journey__description">{description}</p>
+  <div class="max-w-[var(--container-max)] mx-auto grid md:grid-cols-2 gap-[var(--spacing-2xl)] items-center">
+    <div class="reveal-text flex flex-col gap-[var(--spacing-xl)]">
+      <span class="inline-block text-[var(--color-primary)] dark:text-[var(--color-primary-light)] uppercase tracking-[0.15em] text-sm font-bold">DEINE REISE</span>
+      <h2 class="font-display text-[var(--font-size-4xl)] font-black leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-[var(--color-text)]">{title}</h2>
+      <p class="text-[var(--color-text-light)] text-lg leading-[var(--line-height-relaxed)]">{description}</p>
 
-      <ol class="journey__list">
+      <ol class="flex flex-col gap-[var(--spacing-lg)] list-none m-0 p-0">
         {
           steps.map((step) => (
-            <li class="journey__item">
-              <span class="journey__icon">{step.number}</span>
-              <div>
-                <h4>{step.title}</h4>
-                <p>{step.description}</p>
+            <li class="flex items-start gap-4">
+              <span class="flex-shrink-0 w-12 h-12 rounded-full bg-[var(--gradient-primary)] text-[var(--color-white)] flex items-center justify-center font-bold text-xl shadow-[var(--shadow-colored)]">{step.number}</span>
+              <div class="flex flex-col gap-2">
+                <h4 class="font-display text-[var(--font-size-xl)] font-bold text-[var(--color-text)]">{step.title}</h4>
+                <p class="text-[var(--color-text-light)] text-base leading-[var(--line-height-relaxed)]">{step.description}</p>
               </div>
             </li>
           ))
         }
       </ol>
     </div>
-    <div class="journey__image reveal-card">
+    <div class="reveal-card relative">
       <Image
         alt="Persönliche Entwicklungsreise im Männerkreis"
-        class="journey__img"
+        class="w-full h-auto rounded-[var(--radius-2xl)] shadow-[var(--shadow-lg)]"
         loading="lazy"
         decoding="async"
         src={image}
@@ -49,7 +49,7 @@ const { id, title, description, steps, image } = Astro.props;
       />
       <div
         aria-hidden="true"
-        class="journey__image-accent"
+        class="absolute -z-10 top-8 left-8 w-full h-full rounded-[var(--radius-2xl)] bg-[var(--gradient-primary)] opacity-20"
       >
       </div>
     </div>

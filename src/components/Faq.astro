@@ -9,23 +9,23 @@ const { items } = Astro.props;
 ---
 
 <section
-  class="faq"
+  class="py-[var(--spacing-3xl)] px-[var(--container-padding)] bg-gradient-to-b from-[var(--color-bg-dark)] to-[var(--color-bg)]"
   id="c12"
   itemscope
   itemtype="https://schema.org/FAQPage"
 >
-  <h2 class="section__title reveal-text">Häufige Fragen</h2>
-  <div class="faq__grid">
+  <h2 class="reveal-text font-display text-[var(--font-size-4xl)] font-black leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-[var(--color-text)] text-center mb-[var(--spacing-2xl)] max-w-[var(--container-max)] mx-auto">Häufige Fragen</h2>
+  <div class="max-w-[var(--container-max)] mx-auto grid md:grid-cols-2 gap-[var(--spacing-lg)]">
     {
       items.map((item) => (
         <article
-          class="faq__item reveal-card"
+          class="reveal-card bg-[var(--color-white)] dark:bg-[color-mix(in_srgb,#241d18_100%,transparent)] rounded-[var(--radius-xl)] p-[var(--spacing-xl)] shadow-[var(--shadow-md)] border-2 border-transparent hover:border-[var(--color-primary)] dark:hover:border-[var(--color-primary-light)] transition-all duration-300 [transition-timing-function:var(--transition-smooth)]"
           itemprop="mainEntity"
           itemscope
           itemtype="https://schema.org/Question"
         >
           <h3
-            class="faq__question"
+            class="font-display text-[var(--font-size-xl)] font-bold text-[var(--color-text)] mb-[var(--spacing-md)]"
             itemprop="name"
           >
             {item.question}
@@ -36,7 +36,7 @@ const { items } = Astro.props;
             itemtype="https://schema.org/Answer"
           >
             <p
-              class="faq__answer"
+              class="text-[var(--color-text-light)] text-base leading-[var(--line-height-relaxed)]"
               itemprop="text"
               set:html={item.answer}
             />

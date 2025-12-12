@@ -10,14 +10,14 @@ const { items } = Astro.props;
 ---
 
 <section
-  class="features"
+  class="py-[var(--spacing-3xl)] px-[var(--container-padding)] bg-[var(--color-bg)]"
   id="c"
 >
-  <header class="features__intro">
-    <h2 class="section__title reveal-text">Was ist ein Männerkreis?</h2>
+  <header class="max-w-[var(--container-max)] mx-auto mb-[var(--spacing-2xl)] text-center">
+    <h2 class="reveal-text font-display text-[var(--font-size-4xl)] font-black leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-[var(--color-text)]">Was ist ein Männerkreis?</h2>
   </header>
 
-  <div class="features__grid">
+  <div class="max-w-[var(--container-max)] mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-[var(--spacing-lg)]">
     {items.map((feature) => <FeatureCard feature={feature} />)}
   </div>
 </section>

@@ -12,35 +12,35 @@ const { content, event } = Astro.props;
 ---
 
 <section
-  class="hero"
+  class="relative min-h-screen flex items-center overflow-hidden bg-[var(--color-bg)] pt-[calc(var(--nav-height)+var(--spacing-2xl))] px-[var(--container-padding)] pb-[var(--spacing-3xl)]"
   id="c2"
 >
-  <div class="hero__content">
-    <div class="hero__text">
-      <span class="hero__label animate-in">{content.label}</span>
-      <h1 class="hero__title animate-in">
+  <div class="max-w-[var(--container-max)] mx-auto w-full grid md:grid-cols-2 gap-[var(--spacing-2xl)] items-center">
+    <div class="flex flex-col gap-[var(--spacing-lg)] z-10">
+      <span class="animate-in inline-block px-6 py-2 rounded-full bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-[var(--color-primary)] dark:text-[var(--color-primary-light)] text-sm font-bold uppercase tracking-[0.15em]">{content.label}</span>
+      <h1 class="animate-in font-display text-[var(--font-size-5xl)] font-black leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-[var(--color-text)]">
         {content.title}
-        <span class="hero__title--highlight">{content.highlight}</span>
+        <span class="block bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] bg-clip-text text-transparent mt-2">{content.highlight}</span>
       </h1>
-      <div class="hero__description animate-in">
+      <div class="animate-in text-[var(--font-size-lg)] leading-[var(--line-height-relaxed)] text-[var(--color-text-light)] max-w-[60ch]">
         <p>{content.description}</p>
       </div>
       <a
-        class="hero__cta animate-in"
+        class="animate-in inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[var(--gradient-primary)] text-[var(--color-white)] font-semibold text-base shadow-[var(--shadow-colored)] transition-all duration-300 [transition-timing-function:var(--transition-smooth)] hover:shadow-[var(--shadow-colored-lg)] hover:-translate-y-1 active:translate-y-0 no-underline w-fit"
         href={event && event.slug ? `/events/${event.slug}` : content.cta.href}
       >
         {content.cta.label}
       </a>
     </div>
   </div>
-  <div class="hero__image animate-in">
+  <div class="animate-in absolute top-0 right-0 w-full md:w-1/2 h-full opacity-20 md:opacity-100 pointer-events-none md:pointer-events-auto">
     <div
-      class="hero__image-wrapper"
+      class="relative w-full h-full"
       data-parallax="0.2"
     >
       <Image
         alt="Männer in authentischem Austausch beim Männerkreis in Straubing"
-        class="hero__img"
+        class="w-full h-full object-cover object-center rounded-[var(--radius-2xl)] md:rounded-none"
         decoding="async"
         fetchpriority="high"
         loading="eager"
